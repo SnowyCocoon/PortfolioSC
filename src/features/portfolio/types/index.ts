@@ -57,6 +57,8 @@ export interface TechStackItem {
   title: string;
   href?: string;
   iconSlug?: string;
+  /** Direct URL to any icon image (fallback when iconSlug unavailable) */
+  iconUrl?: string;
 }
 
 export interface Project {
@@ -91,11 +93,12 @@ export interface Bookmark {
   iconSlug?: string;
 }
 
+// Ice/snow palette (#CBF1FA #AEDBF0 #6BA7CC) + SnowyCocoon brand red (#b5392b / #530708)
 export const TAG_COLORS: Record<string, string> = {
-  DataScience: "bg-blue-500/10 text-blue-500",
-  AI: "bg-purple-500/10 text-purple-500",
-  GameDev: "bg-green-500/10 text-green-500",
-  TechnicalArt: "bg-orange-500/10 text-orange-500",
-  Art: "bg-pink-500/10 text-pink-500",
-  Web: "bg-cyan-500/10 text-cyan-500",
+  DataScience:  "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  AI:           "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  GameDev:      "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
+  TechnicalArt: "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  Art:          "bg-[#530708]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#fca5a5]",
+  Web:          "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
 };

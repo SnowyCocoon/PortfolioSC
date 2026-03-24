@@ -31,5 +31,5 @@ export const USER: User = {
     "Skilled in Unity, Godot, and UE5 with experience in both 2D and 3D games, VFX, procedural generation, and AI/ML integration.",
     "Master's thesis on voice recognition in games earned a Best Paper Award at FedCSIS 2021. Expertise spans Data Science, NLP, Computer Vision, and Deep Learning.",
   ],
-  avatar: "/images/avatar.svg",
+  avatar: "/images/avatar.jpg",
 };
