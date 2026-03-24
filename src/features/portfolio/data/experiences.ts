@@ -5,7 +5,7 @@ export const EXPERIENCES: Experience[] = [
     id: "3r-games",
     companyName: "3R GAMES S.A.",
     companyWebsite: "https://3rgames.com",
-    logo: "/images/companies/3r-games.png",
+    logo: "/images/companies/3rgames_logo.jpg",
     positions: [
       {
         title: "Unity Developer",
@@ -18,15 +18,36 @@ export const EXPERIENCES: Experience[] = [
           "Programming and Designing Combat system",
           "Improving overall experience with game from gameplay point of view",
         ],
-        skills: ["Unity", "C#"],
+        skills: ["Unity", "C#", "AI", "Combat Design"],
       },
     ],
     location: "Remote",
   },
   {
+    id: "snowy-cocoon",
+    companyName: "SnowyCocoon (Personal Brand)",
+    logo: "/images/companies/snowycocoon_logo.png",
+    positions: [
+      {
+        title: "Technical Artist, Game Developer",
+        employmentType: "Self-employed",
+        startDate: "01.2025",
+        endDate: "Present",
+        description: [
+          "Creating materials and textures for sale on the Unity Asset Store and other marketplaces (FAB/Itch.io)",
+          "Creating Substance Designer Tools for procedural materials creation and exporting them easily",
+          "Working as a freelance developer for different clients, fixing code, building new features and checking the condition of the project",
+          "Working on my own personal projects in my free time, including a new game project and a new asset packs",
+        ],
+        skills: ["Substance Designer", "Blender", "Aseprite", "UEFN", "Verse", "Affinity"],
+      },
+    ],
+    location: "Poznan, Remote",
+  },
+  {
     id: "manic-pixel",
     companyName: "Manic Pixel Dream Games",
-    logo: "/images/companies/manic-pixel.png",
+    logo: "/images/companies/mpdgames_logo.jpg",
     positions: [
       {
         title: "Lead Godot Developer",
@@ -39,16 +60,36 @@ export const EXPERIENCES: Experience[] = [
           "Shaders creation",
           "Managing and designing all technical aspects of the game",
         ],
-        skills: ["Godot", "GDScript", "Shaders"],
+        skills: ["Godot", "GDScript", "Shaders", "Game Architecture", "Technical Design"],
       },
     ],
     location: "Poznan, Remote",
   },
   {
+    id: "hikari",
+    companyName: "Hikari",
+    logo: "/images/companies/hikari_logo.jpg",
+    positions: [
+      {
+        title: "Event Organizer, Data Analyst, Creative department lead",
+        employmentType: "Volunteer",
+        startDate: "02.2023",
+        endDate: "Present",
+        description: [
+          "Organizing the biggest anime convention in Poznań, and one of the biggest in Poland, with over 5000 attendees each year",
+          "Analyzing data to improve event planning and attendee experience",
+          "Leading the creative department to develop engaging content and marketing strategies, like advergames",
+        ],
+        skills: ["Game Development", "Event Organization", "Data Analysis", "Creative Direction", "Python", ],
+      },
+    ],
+    location: "Poznan",
+  },
+  {
     id: "knoocker",
     companyName: "Knoocker",
     companyWebsite: "https://www.knoocker.com",
-    logo: "/images/companies/knoocker.png",
+    logo: "/images/companies/knoocker_logo.jpg",
     positions: [
       {
         title: "Unity Developer",
@@ -63,15 +104,15 @@ export const EXPERIENCES: Experience[] = [
           "Unity/C# Programming",
           "2D Animations (including Skeletal Animations, Inverse Kinematic)",
         ],
-        skills: ["Unity", "C#", "AI", "Voice Recognition", "2D Animation"],
+        skills: ["Unity", "C#","UI", "Voice Recognition", "2D Skeletal Animation"],
       },
     ],
     location: "Poznan, Poland",
   },
   {
     id: "microtaur",
-    companyName: "Microtaur (Intermission Games)",
-    logo: "/images/companies/microtaur.png",
+    companyName: "Sidestream Games (Microtaur/Intermission Games)",
+    logo: "/images/companies/microtaur_logo.png",
     positions: [
       {
         title: "Co-founder, Godot Developer, Game Designer",
@@ -93,7 +134,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "put-vr",
     companyName: "Poznan University of Economics And Business",
-    logo: "/images/companies/put-vr.png",
+    logo: "/images/companies/uepoznan_logo.jpg",
     positions: [
       {
         title: "VR Unity Developer",

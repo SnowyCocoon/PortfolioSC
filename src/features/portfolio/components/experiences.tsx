@@ -29,7 +29,7 @@ function CompanyLogo({ experience }: { experience: Experience }) {
           src={experience.logo}
           alt={experience.companyName}
           fill
-          className="object-contain p-1"
+          className="object-cover"
           onError={() => setImgFailed(true)}
         />
       </div>

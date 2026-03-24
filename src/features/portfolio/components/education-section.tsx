@@ -57,6 +57,12 @@ function EducationItem({ education }: { education: Education }) {
           </p>
         )}
 
+        {education.info && (
+          <p className="mt-1 font-mono text-xs text-muted-foreground/70 leading-relaxed">
+            {education.info}
+          </p>
+        )}
+
         {education.skills.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1">
             {education.skills.map((skill) => (

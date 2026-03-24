@@ -11,7 +11,7 @@ export const TECH_STACK_AI: TechStackItem[] = [
   { key: "jenkins", title: "Jenkins", href: "https://www.jenkins.io", iconSlug: "jenkins" },
   { key: "claude", title: "Claude", href: "https://claude.ai", iconSlug: "anthropic" },
   { key: "pandas", title: "Pandas", href: "https://pandas.pydata.org", iconSlug: "pandas" },
-  { key: "matplotlib", title: "Matplotlib", href: "https://matplotlib.org", iconUrl: "https://matplotlib.org/stable/_static/images/logo2.svg" },
+  { key: "matplotlib", title: "Matplotlib", href: "https://matplotlib.org", iconUrl: "/icons/matplotlib.svg" },
   { key: "pytorch", title: "PyTorch", href: "https://pytorch.org", iconSlug: "pytorch" },
   { key: "tensorflow", title: "TensorFlow", href: "https://www.tensorflow.org", iconSlug: "tensorflow" },
   { key: "shadcn", title: "shadcn/ui", href: "https://ui.shadcn.com", iconSlug: "shadcnui" },

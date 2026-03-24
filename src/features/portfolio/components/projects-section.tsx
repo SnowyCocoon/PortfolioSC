@@ -21,7 +21,6 @@ const CATEGORY_ICONS: Record<string, ReactNode> = {
   Web:          <Globe2 className="size-4" />,
 };
 
-// Category icon container: ice/snow + SnowyCocoon brand red palette
 const CATEGORY_BG: Record<string, string> = {
   GameDev:      "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
   AI:           "bg-[#AEDBF0]/50 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
@@ -56,8 +55,8 @@ function ProjectItem({ project }: { project: Project }) {
   const icon = primaryCategory ? CATEGORY_ICONS[primaryCategory] : <FolderOpen className="size-4" />;
   const bgCls = primaryCategory ? (CATEGORY_BG[primaryCategory] ?? "bg-muted text-muted-foreground") : "bg-muted text-muted-foreground";
 
-  return (
-    <div className="flex gap-4 border-b border-line px-4 py-3 last:border-b-0">
+  const inner = (
+    <>
       <div className={`flex size-9 shrink-0 items-center justify-center rounded-lg border border-line ${bgCls}`}>
         {icon}
       </div>
@@ -65,19 +64,7 @@ function ProjectItem({ project }: { project: Project }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h3 className="font-mono text-xs font-bold">{project.title}</h3>
-              {project.href && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground transition-colors hover:text-[#b5392b]"
-                >
-                  <ArrowUpRight className="size-3" />
-                </a>
-              )}
-            </div>
+            <h3 className="font-mono text-xs font-bold">{project.title}</h3>
             <p className="font-mono text-xs text-muted-foreground">
               {project.date}
             </p>
@@ -98,6 +85,30 @@ function ProjectItem({ project }: { project: Project }) {
           </div>
         </div>
       </div>
+
+      {/* Arrow shown when link exists */}
+      {project.href && (
+        <ArrowUpRight className="size-4 shrink-0 self-center text-muted-foreground transition-colors group-hover:text-foreground" />
+      )}
+    </>
+  );
+
+  if (project.href) {
+    return (
+      <a
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex gap-4 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60"
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div className="flex gap-4 border-b border-line px-4 py-3 last:border-b-0">
+      {inner}
     </div>
   );
 }

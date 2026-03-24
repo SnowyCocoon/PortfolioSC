@@ -18,7 +18,7 @@ export function SiteHeader() {
           <img
             src="/logo.png"
             alt="SnowyCocoon"
-            className="h-7 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:invert"
+            className="h-7 w-auto object-contain mix-blend-multiply dark:mix-blend-normal"
             draggable={false}
           />
         </Link>

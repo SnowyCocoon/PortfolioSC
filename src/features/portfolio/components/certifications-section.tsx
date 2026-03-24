@@ -36,10 +36,10 @@ function CertificationItem({
 }: {
   certification: Certification;
 }) {
-  return (
-    <div className="flex items-center gap-3 border-b border-line px-4 py-3 last:border-b-0">
+  const inner = (
+    <>
       {/* Icon */}
-      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-white p-1 shadow-sm">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-white p-1 shadow-sm">
         {certification.iconSlug ? (
           <img
             src={`https://cdn.simpleicons.org/${certification.iconSlug}`}
@@ -53,22 +53,40 @@ function CertificationItem({
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="truncate font-mono text-xs font-bold">{certification.title}</h3>
+        <h3 className="font-mono text-xs font-bold leading-snug">{certification.title}</h3>
         <p className="font-mono text-xs text-muted-foreground">
           @{certification.issuer} &bull; {certification.date}
         </p>
+        {certification.certId && (
+          <p className="font-mono text-[10px] text-muted-foreground/60">
+            ID: {certification.certId}
+          </p>
+        )}
       </div>
 
+      {/* Arrow — always shown when there's a link */}
       {certification.href && (
-        <a
-          href={certification.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 text-muted-foreground hover:text-foreground"
-        >
-          <ArrowUpRight className="size-4" />
-        </a>
+        <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
       )}
+    </>
+  );
+
+  if (certification.href) {
+    return (
+      <a
+        href={certification.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex items-center gap-3 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60"
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-3 border-b border-line px-4 py-3 last:border-b-0">
+      {inner}
     </div>
   );
 }

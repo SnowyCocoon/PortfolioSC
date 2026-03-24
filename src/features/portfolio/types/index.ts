@@ -42,6 +42,7 @@ export interface Education {
   startYear: string;
   endYear: string;
   grade?: string;
+  info?: string;
   thesis?: string;
   skills: string[];
 }
@@ -84,6 +85,7 @@ export interface Certification {
   issuer: string;
   date: string;
   href?: string;
+  certId?: string;
   iconSlug?: string;
 }
 

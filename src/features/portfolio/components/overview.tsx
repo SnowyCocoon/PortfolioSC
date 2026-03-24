@@ -9,6 +9,7 @@ import {
   Link as LinkIcon,
   Heart,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { USER } from "../data/user";
 
 function CurrentTime() {
@@ -40,16 +41,39 @@ export function Overview() {
       <div className="grid grid-cols-1 sm:grid-cols-2">
         {/* Left column */}
         <div>
-          <OverviewItem icon={<Briefcase className="size-4" />} label={`${USER.currentJobs[0].title} @${USER.currentJobs[0].company}`} />
-          <OverviewItem icon={<Heart className="size-4" />} label={USER.volunteerRole || ""} />
-          <OverviewItem icon={<MapPin className="size-4" />} label={USER.location} />
+          <OverviewItem
+            icon={<Briefcase className="size-4" />}
+            label={`${USER.currentJobs[0].title} @${USER.currentJobs[0].company}`}
+            href="https://3r.games/"
+          />
+          <OverviewItem
+            icon={<Heart className="size-4" />}
+            label={USER.volunteerRole || ""}
+            href="https://hikari.pl/"
+          />
+          <OverviewItem
+            icon={<MapPin className="size-4" />}
+            label={USER.location}
+            href="https://maps.google.com/?q=Poznan,Poland"
+          />
         </div>
 
-        {/* Right column */}
-        <div className="sm:border-l sm:border-line">
-          <OverviewItem icon={<Clock className="size-4" />} label={<CurrentTime />} />
-          <OverviewItem icon={<Mail className="size-4" />} label={USER.email} />
-          <OverviewItem icon={<LinkIcon className="size-4" />} label={USER.website} />
+        {/* Right column — border-t on mobile bridges the two columns */}
+        <div className="border-t border-line sm:border-t-0 sm:border-l sm:border-line">
+          <OverviewItem
+            icon={<Clock className="size-4" />}
+            label={<CurrentTime />}
+          />
+          <OverviewItem
+            icon={<Mail className="size-4" />}
+            label={USER.email}
+            href={`mailto:${USER.email}`}
+          />
+          <OverviewItem
+            icon={<LinkIcon className="size-4" />}
+            label={USER.website}
+            href={`https://${USER.website}`}
+          />
         </div>
       </div>
     </div>
@@ -59,16 +83,38 @@ export function Overview() {
 function OverviewItem({
   icon,
   label,
+  href,
 }: {
   icon: React.ReactNode;
   label: React.ReactNode;
+  href?: string;
 }) {
-  return (
-    <div className="flex items-center gap-4 border-b border-line px-4 py-3 font-mono text-sm text-muted-foreground last:border-b-0">
+  const cls = cn(
+    "flex items-center gap-4 border-b border-line px-4 py-3 font-mono text-sm text-muted-foreground last:border-b-0",
+    href && "cursor-pointer transition-colors hover:bg-accent/60"
+  );
+
+  const inner = (
+    <>
       <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-muted-foreground">
         {icon}
       </span>
       <span className="truncate">{label}</span>
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={href.startsWith("mailto:") ? "_self" : "_blank"}
+        rel="noopener noreferrer"
+        className={cls}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return <div className={cls}>{inner}</div>;
 }

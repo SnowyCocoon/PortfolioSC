@@ -1,7 +1,7 @@
 import type { TechStackItem } from "../types";
 
 export const TECH_STACK_GAMEDEV: TechStackItem[] = [
-  { key: "unity", title: "Unity", href: "https://unity.com", iconSlug: "unity" },
+  { key: "unity", title: "Unity", href: "https://unity.com", iconUrl: "/icons/unity.svg" },
   { key: "csharp", title: "C#", href: "https://learn.microsoft.com/en-us/dotnet/csharp/", iconUrl: "/icons/csharp.svg" },
   { key: "godot", title: "Godot", href: "https://godotengine.org", iconSlug: "godotengine" },
   { key: "unreal", title: "Unreal Engine", href: "https://www.unrealengine.com", iconSlug: "unrealengine" },

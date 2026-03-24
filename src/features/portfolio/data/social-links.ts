@@ -17,7 +17,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     title: "Discord",
     subtitle: "snowycocoon",
-    href: "https://discord.com",
+    href: "https://discord.gg/4CWbFAaNaN",
     icon: "discord",
   },
   {
@@ -34,8 +34,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     title: "itch.io",
-    subtitle: "adnovac",
-    href: "https://adnovac.itch.io",
+    subtitle: "snowycocoon",
+    href: "https://snowycocoon.itch.io",
     icon: "itchdotio",
   },
 ];
