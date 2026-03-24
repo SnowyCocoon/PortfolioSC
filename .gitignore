@@ -39,3 +39,5 @@ yarn-error.log*
 
 # Claude local settings (keep launch.json but not local overrides)
 .claude/settings.local.json
+
+.vercel
