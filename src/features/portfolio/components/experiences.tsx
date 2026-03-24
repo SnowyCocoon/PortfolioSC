@@ -1,3 +1,7 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
 import {
   Panel,
   PanelHeader,
@@ -13,6 +17,33 @@ const COMPANY_STYLES: Record<string, { bg: string; text: string; initials: strin
   "microtaur":    { bg: "bg-green-600",  text: "text-white", initials: "M"  },
   "put-vr":       { bg: "bg-orange-500", text: "text-white", initials: "P"  },
 };
+
+function CompanyLogo({ experience }: { experience: Experience }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const style = COMPANY_STYLES[experience.id];
+
+  if (experience.logo && !imgFailed) {
+    return (
+      <div className="relative flex size-10 shrink-0 overflow-hidden rounded-lg border border-line bg-background">
+        <Image
+          src={experience.logo}
+          alt={experience.companyName}
+          fill
+          className="object-contain p-1"
+          onError={() => setImgFailed(true)}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`flex size-10 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold ${style?.bg ?? "bg-muted"} ${style?.text ?? "text-muted-foreground"}`}
+    >
+      {style?.initials ?? experience.companyName.slice(0, 2).toUpperCase()}
+    </div>
+  );
+}
 
 export function Experiences() {
   return (
@@ -30,15 +61,9 @@ export function Experiences() {
 }
 
 function ExperienceItem({ experience }: { experience: Experience }) {
-  const style = COMPANY_STYLES[experience.id];
-
   return (
     <div className="flex gap-4 border-b border-line px-4 py-4 last:border-b-0">
-      <div
-        className={`flex size-10 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold ${style?.bg ?? "bg-muted"} ${style?.text ?? "text-muted-foreground"}`}
-      >
-        {style?.initials ?? experience.companyName.slice(0, 2).toUpperCase()}
-      </div>
+      <CompanyLogo experience={experience} />
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">

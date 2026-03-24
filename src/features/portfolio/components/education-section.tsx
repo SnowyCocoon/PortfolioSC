@@ -1,3 +1,4 @@
+import { GraduationCap } from "lucide-react";
 import {
   Panel,
   PanelHeader,
@@ -13,7 +14,8 @@ export function EducationSection() {
         <PanelTitle>Education</PanelTitle>
       </PanelHeader>
       <div className="relative">
-        <div className="absolute bottom-4 left-7 top-4 w-px bg-line" />
+        {/* Vertical timeline line — runs between icon centers */}
+        <div className="absolute bottom-8 left-[2.25rem] top-8 w-px bg-line" />
         {EDUCATION.map((edu) => (
           <EducationItem key={edu.id} education={edu} />
         ))}
@@ -25,9 +27,11 @@ export function EducationSection() {
 function EducationItem({ education }: { education: Education }) {
   return (
     <div className="flex gap-4 border-b border-line px-4 py-4 last:border-b-0">
-      <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border border-line bg-background">
-        <div className="size-2 rounded-full bg-foreground/40" />
+      {/* Graduation cap icon in a bordered frame — same style as overview icons */}
+      <div className="relative z-10 flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-muted-foreground">
+        <GraduationCap className="size-4" />
       </div>
+
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-mono text-sm font-bold">{education.institution}</h3>

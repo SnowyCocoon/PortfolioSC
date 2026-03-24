@@ -65,7 +65,7 @@ function OverviewItem({
 }) {
   return (
     <div className="flex items-center gap-4 border-b border-line px-4 py-3 font-mono text-sm text-muted-foreground last:border-b-0">
-      <span className="flex size-6 shrink-0 items-center justify-center rounded-lg text-muted-foreground">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-muted-foreground">
         {icon}
       </span>
       <span className="truncate">{label}</span>

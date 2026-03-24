@@ -14,7 +14,6 @@ export const TECH_STACK_AI: TechStackItem[] = [
   { key: "matplotlib", title: "Matplotlib", href: "https://matplotlib.org", iconUrl: "https://matplotlib.org/stable/_static/images/logo2.svg" },
   { key: "pytorch", title: "PyTorch", href: "https://pytorch.org", iconSlug: "pytorch" },
   { key: "tensorflow", title: "TensorFlow", href: "https://www.tensorflow.org", iconSlug: "tensorflow" },
-  { key: "stable-diffusion", title: "Stable Diffusion", href: "https://stability.ai", iconUrl: "/icons/stable-diffusion.svg" },
   { key: "shadcn", title: "shadcn/ui", href: "https://ui.shadcn.com", iconSlug: "shadcnui" },
   { key: "supabase", title: "Supabase", href: "https://supabase.com", iconSlug: "supabase" },
   { key: "cursor", title: "Cursor", href: "https://cursor.com", iconSlug: "cursor" },

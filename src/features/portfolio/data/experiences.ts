@@ -5,6 +5,7 @@ export const EXPERIENCES: Experience[] = [
     id: "3r-games",
     companyName: "3R GAMES S.A.",
     companyWebsite: "https://3rgames.com",
+    logo: "/images/companies/3r-games.png",
     positions: [
       {
         title: "Unity Developer",
@@ -25,6 +26,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "manic-pixel",
     companyName: "Manic Pixel Dream Games",
+    logo: "/images/companies/manic-pixel.png",
     positions: [
       {
         title: "Lead Godot Developer",
@@ -46,6 +48,7 @@ export const EXPERIENCES: Experience[] = [
     id: "knoocker",
     companyName: "Knoocker",
     companyWebsite: "https://www.knoocker.com",
+    logo: "/images/companies/knoocker.png",
     positions: [
       {
         title: "Unity Developer",
@@ -68,6 +71,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "microtaur",
     companyName: "Microtaur (Intermission Games)",
+    logo: "/images/companies/microtaur.png",
     positions: [
       {
         title: "Co-founder, Godot Developer, Game Designer",
@@ -89,6 +93,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "put-vr",
     companyName: "Poznan University of Economics And Business",
+    logo: "/images/companies/put-vr.png",
     positions: [
       {
         title: "VR Unity Developer",

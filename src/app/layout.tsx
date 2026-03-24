@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     title: SITE_INFO.name,
     description: SITE_INFO.description,
   },
+  icons: {
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

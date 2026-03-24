@@ -28,6 +28,7 @@ export interface Experience {
   id: string;
   companyName: string;
   companyWebsite?: string;
+  logo?: string;
   positions: ExperiencePosition[];
   location?: string;
 }

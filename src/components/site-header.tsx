@@ -13,8 +13,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex h-12 max-w-3xl items-center justify-between px-4">
-        <Link href="/" className="font-mono text-sm font-bold tracking-tight">
-          DS
+        <Link href="/" className="flex items-center">
+          {/* mix-blend-multiply removes white bg in light mode */}
+          <img
+            src="/logo.png"
+            alt="SnowyCocoon"
+            className="h-7 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:invert"
+            draggable={false}
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
