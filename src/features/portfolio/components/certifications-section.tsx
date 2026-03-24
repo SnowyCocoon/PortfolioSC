@@ -39,8 +39,15 @@ function CertificationItem({
   const inner = (
     <>
       {/* Icon */}
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-white p-1 shadow-sm">
-        {certification.iconSlug ? (
+      <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-line bg-white p-1 shadow-sm">
+        {certification.iconUrl ? (
+          <img
+            src={certification.iconUrl}
+            alt={certification.issuer}
+            className="size-full object-contain"
+            loading="lazy"
+          />
+        ) : certification.iconSlug ? (
           <img
             src={`https://cdn.simpleicons.org/${certification.iconSlug}`}
             alt={certification.issuer}

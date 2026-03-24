@@ -87,6 +87,25 @@ export interface Certification {
   href?: string;
   certId?: string;
   iconSlug?: string;
+  iconUrl?: string;
+}
+
+// Returns a consistent color from TAG_COLORS for any plain skill string (hash-based).
+const SKILL_COLOR_LIST = [
+  "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
+  "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  "bg-[#530708]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#fca5a5]",
+  "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
+];
+
+export function getSkillColor(skill: string): string {
+  let h = 0;
+  for (let i = 0; i < skill.length; i++) {
+    h = (h * 31 + skill.charCodeAt(i)) & 0xffff;
+  }
+  return SKILL_COLOR_LIST[h % SKILL_COLOR_LIST.length];
 }
 
 export interface Bookmark {

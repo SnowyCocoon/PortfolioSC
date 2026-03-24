@@ -8,7 +8,7 @@ import {
   PanelTitle,
 } from "./panel";
 import { EXPERIENCES } from "../data/experiences";
-import type { Experience } from "../types";
+import { type Experience, getSkillColor } from "../types";
 
 const COMPANY_STYLES: Record<string, { bg: string; text: string; initials: string }> = {
   "3r-games":     { bg: "bg-red-500",    text: "text-white", initials: "3R" },
@@ -119,7 +119,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                 {pos.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded bg-accent px-1.5 py-0.5 font-mono text-xs text-accent-foreground"
+                    className={`rounded px-1.5 py-0.5 font-mono text-xs ${getSkillColor(skill)}`}
                   >
                     {skill}
                   </span>

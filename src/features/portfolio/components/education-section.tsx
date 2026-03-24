@@ -5,7 +5,7 @@ import {
   PanelTitle,
 } from "./panel";
 import { EDUCATION } from "../data/education";
-import type { Education } from "../types";
+import { type Education, getSkillColor } from "../types";
 
 export function EducationSection() {
   return (
@@ -68,7 +68,7 @@ function EducationItem({ education }: { education: Education }) {
             {education.skills.map((skill) => (
               <span
                 key={skill}
-                className="rounded bg-accent px-1.5 py-0.5 font-mono text-xs text-accent-foreground"
+                className={`rounded px-1.5 py-0.5 font-mono text-xs ${getSkillColor(skill)}`}
               >
                 {skill}
               </span>

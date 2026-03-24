@@ -4,7 +4,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "3r-games",
     companyName: "3R GAMES S.A.",
-    companyWebsite: "https://3rgames.com",
+    companyWebsite: "https://3r.games/",
     logo: "/images/companies/3rgames_logo.jpg",
     positions: [
       {
@@ -26,6 +26,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "snowy-cocoon",
     companyName: "SnowyCocoon (Personal Brand)",
+    companyWebsite: "https://snowycocoon.com/",
     logo: "/images/companies/snowycocoon_logo.png",
     positions: [
       {
@@ -47,6 +48,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "manic-pixel",
     companyName: "Manic Pixel Dream Games",
+    companyWebsite: "https://manicpixeldream.games/",
     logo: "/images/companies/mpdgames_logo.jpg",
     positions: [
       {
@@ -68,6 +70,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "hikari",
     companyName: "Hikari",
+    companyWebsite: "https://hikari.pl/",
     logo: "/images/companies/hikari_logo.jpg",
     positions: [
       {
@@ -87,8 +90,8 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     id: "knoocker",
-    companyName: "Knoocker",
-    companyWebsite: "https://www.knoocker.com",
+    companyName: "Knoocker/Knowla",
+    companyWebsite: "https://knowla.eu/en/",
     logo: "/images/companies/knoocker_logo.jpg",
     positions: [
       {
@@ -112,6 +115,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "microtaur",
     companyName: "Sidestream Games (Microtaur/Intermission Games)",
+    companyWebsite: "https://sidestream.games/",
     logo: "/images/companies/microtaur_logo.png",
     positions: [
       {
@@ -134,6 +138,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "put-vr",
     companyName: "Poznan University of Economics And Business",
+    companyWebsite: "https://ue.poznan.pl/",
     logo: "/images/companies/uepoznan_logo.jpg",
     positions: [
       {

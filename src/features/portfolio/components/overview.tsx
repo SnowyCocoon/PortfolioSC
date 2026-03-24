@@ -43,12 +43,22 @@ export function Overview() {
         <div>
           <OverviewItem
             icon={<Briefcase className="size-4" />}
-            label={`${USER.currentJobs[0].title} @${USER.currentJobs[0].company}`}
+            label={
+              <>
+                {USER.currentJobs[0].title}{" "}
+                <span className="font-bold text-foreground">@{USER.currentJobs[0].company}</span>
+              </>
+            }
             href="https://3r.games/"
           />
           <OverviewItem
             icon={<Heart className="size-4" />}
-            label={USER.volunteerRole || ""}
+            label={
+              <>
+                Event Organizer{" "}
+                <span className="font-bold text-foreground">@Hikari</span>
+              </>
+            }
             href="https://hikari.pl/"
           />
           <OverviewItem

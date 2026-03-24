@@ -10,7 +10,7 @@ export const EDUCATION: Education[] = [
     endYear: "2023",
     grade: "5.0",
     thesis:
-      "Designing whole brand strategy for a new product (Expense Tracker), including market analysis, target audience identification, and marketing plan development",
+      "Ending Project: Designing whole brand strategy for a new product (Expense Tracker), including market analysis, target audience identification, and marketing plan development",
     skills: ["Brand Management", "E-Commerce", "Project Management", "Marketing", "Product Management", "SEO"],
   },
   {
@@ -22,9 +22,9 @@ export const EDUCATION: Education[] = [
     startYear: "2021",
     endYear: "2022",
     grade: "5.0",
-    info: "I was one of the top-performing students in my cohort and was awarded the Rector's Scholarship for academic excellence. I was also selected to represent my university at several international conferences, including:  US-Poland Science and Technology Symposium in San Francisco PyCon Italia in Florence World AI Cannes Festival in Cannes  Additionally, I received the Best Paper Award in the Young Researcher Workshop category at FedCSIS 2021.",
+    info: "I was one of the top-performing students in my cohort and was awarded the Rector's Scholarship for academic excellence. I was also selected to represent my university at several international conferences, including:  US-Poland Science and Technology Symposium in San Francisco, PyCon Italia in Florence, and World AI Cannes Festival in Cannes. Additionally, I received the Best Paper Award in the Young Researcher Workshop category at FedCSIS 2021.",
     thesis:
-      "Speech controlled Games - Process of implementing speech recognition and control in games",
+      "Master's Thesis: Speech controlled Games - Process of implementing speech recognition and control in games",
     skills: ["Computer Vision", "Speech Recognition", "Unity", "AI", "Data Science", "NLP", "Deep Learning", "Neural Networks"],
   },
   {
