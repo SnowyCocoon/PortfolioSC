@@ -1,0 +1,111 @@
+import type { Experience } from "../types";
+
+export const EXPERIENCES: Experience[] = [
+  {
+    id: "3r-games",
+    companyName: "3R GAMES S.A.",
+    companyWebsite: "https://3rgames.com",
+    positions: [
+      {
+        title: "Unity Developer",
+        employmentType: "Freelance",
+        startDate: "11.2025",
+        endDate: "Present",
+        description: [
+          "Working on the new game: Punch Lunch: Foodtruck Fighter",
+          "Programming Players and Enemies Behavior trees",
+          "Programming and Designing Combat system",
+          "Improving overall experience with game from gameplay point of view",
+        ],
+        skills: ["Unity", "C#"],
+      },
+    ],
+    location: "Remote",
+  },
+  {
+    id: "manic-pixel",
+    companyName: "Manic Pixel Dream Games",
+    positions: [
+      {
+        title: "Lead Godot Developer",
+        employmentType: "Contract",
+        startDate: "01.2025",
+        endDate: "10.2025",
+        description: [
+          "Working as a Godot Developer for the upcoming Manic Pixel Dream Games game",
+          "Creating integration systems between large .json files and Godot",
+          "Shaders creation",
+          "Managing and designing all technical aspects of the game",
+        ],
+        skills: ["Godot", "GDScript", "Shaders"],
+      },
+    ],
+    location: "Poznan, Remote",
+  },
+  {
+    id: "knoocker",
+    companyName: "Knoocker",
+    companyWebsite: "https://www.knoocker.com",
+    positions: [
+      {
+        title: "Unity Developer",
+        employmentType: "Contract",
+        startDate: "09.2021",
+        endDate: "12.2024",
+        description: [
+          'Creating games for the "Knoocker Box"',
+          "Implementing Voice/Speech recognition in Unity Games",
+          "Developing AI solutions to create a game suggestion system + Game Analytics",
+          "Game and level design",
+          "Unity/C# Programming",
+          "2D Animations (including Skeletal Animations, Inverse Kinematic)",
+        ],
+        skills: ["Unity", "C#", "AI", "Voice Recognition", "2D Animation"],
+      },
+    ],
+    location: "Poznan, Poland",
+  },
+  {
+    id: "microtaur",
+    companyName: "Microtaur (Intermission Games)",
+    positions: [
+      {
+        title: "Co-founder, Godot Developer, Game Designer",
+        employmentType: "Self-employed",
+        startDate: "04.2020",
+        endDate: "12.2024",
+        description: [
+          "Creating a marketing game for InStreamly and PepsiCo",
+          "Creating our own projects and MVPs",
+          "Creating MVPs and Demos for big clients from the marketing and streaming industry",
+          "Working in both Godot and Unity Engines",
+          "Working with Twitch Extensions and Twitch API",
+        ],
+        skills: ["Godot", "Unity", "Game Design", "Twitch API"],
+      },
+    ],
+    location: "Krakow, Poland",
+  },
+  {
+    id: "put-vr",
+    companyName: "Poznan University of Economics And Business",
+    positions: [
+      {
+        title: "VR Unity Developer",
+        employmentType: "Internship",
+        startDate: "09.2020",
+        endDate: "12.2020",
+        description: [
+          'Internship at the "VR Lab" at the University',
+          'Worked on a project for "Enea Operator", a Polish power industry company',
+          "3D Art and programming fixes",
+          "Testing the VR Software and Excel worksheets",
+          "Managing the semantic web",
+          "Presenting the product to the client",
+        ],
+        skills: ["Unity", "VR", "3D Art"],
+      },
+    ],
+    location: "Poznan, Poland",
+  },
+];
