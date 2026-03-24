@@ -6,6 +6,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
     subtitle: "@snowycocoon",
     href: "https://www.linkedin.com/in/snowycocoon",
     icon: "linkedin",
+    iconUrl: "/icons/linkedin.svg",
   },
   {
     title: "ArtStation",

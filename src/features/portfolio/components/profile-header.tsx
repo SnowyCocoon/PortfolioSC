@@ -45,15 +45,13 @@ export function ProfileHeader() {
             transition: "transform 0.18s cubic-bezier(0.25,0.46,0.45,0.94)",
           }}
         >
-          {/* mix-blend-multiply removes white bg in light mode; dark:mix-blend-normal shows logo on subtle frosted container */}
-          <div className="rounded-2xl dark:bg-white/[0.08] dark:shadow-lg dark:backdrop-blur-sm">
-            <img
-              src="/logo.png"
-              alt="SnowyCocoon"
-              className="h-20 w-auto object-contain mix-blend-multiply sm:h-28 dark:mix-blend-normal"
-              draggable={false}
-            />
-          </div>
+          {/* mix-blend-multiply removes white bg in light mode; dark:mix-blend-normal shows logo cleanly */}
+          <img
+            src="/logo.png"
+            alt="SnowyCocoon"
+            className="h-40 w-auto object-contain mix-blend-multiply sm:h-56 dark:mix-blend-normal"
+            draggable={false}
+          />
         </div>
       </div>
 

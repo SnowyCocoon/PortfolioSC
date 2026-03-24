@@ -14,7 +14,7 @@ export function SocialLinks() {
         >
           <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-white p-1">
             <img
-              src={`https://cdn.simpleicons.org/${link.icon}`}
+              src={link.iconUrl ?? `https://cdn.simpleicons.org/${link.icon}`}
               alt={link.title}
               className="size-full object-contain"
               loading="lazy"

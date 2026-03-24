@@ -50,6 +50,8 @@ export interface SocialLink {
   subtitle: string;
   href: string;
   icon: string;
+  /** Direct URL to icon image (fallback when icon slug unavailable) */
+  iconUrl?: string;
 }
 
 export interface TechStackItem {

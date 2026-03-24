@@ -135,6 +135,17 @@
   }
 }
 
+/* High-specificity overrides for cream background — beats bundled :root defaults */
+html:not(.dark) {
+  --background: #fcfdf2;
+  --card: #fcfdf2;
+  --popover: #fcfdf2;
+  background-color: #fcfdf2;
+}
+html:not(.dark) body {
+  background-color: #fcfdf2;
+}
+
 /* Full-bleed horizontal line utilities — extend lines to viewport edges */
 @utility screen-line-top {
   position: relative;
