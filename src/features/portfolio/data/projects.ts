@@ -7,7 +7,7 @@ export const PROJECTS: Project[] = [
     description:
       "A fighting game developed at 3R Games with behavior trees, combat systems, and gameplay design.",
     href: "https://store.steampowered.com",
-    tags: [{ label: "GameDev", category: "GameDev" }],
+    tags: [{ label: "Game Dev", category: "GameDev" }],
     date: "2025",
   },
   {
@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
       "Multiple games created for the Knoocker Box platform with voice recognition, AI game suggestion system, and skeletal animations.",
     href: "https://www.knoocker.com/knoocker-box/",
     tags: [
-      { label: "GameDev", category: "GameDev" },
+      { label: "Game Dev", category: "GameDev" },
       { label: "AI", category: "AI" },
     ],
     date: "2021-2024",
@@ -30,7 +30,8 @@ export const PROJECTS: Project[] = [
     href: "https://annals-csis.org/Volume_26/index.html",
     tags: [
       { label: "AI", category: "AI" },
-      { label: "DataScience", category: "DataScience" },
+      { label: "Data Science", category: "DataScience" },
+      { label: "NLP", category: "NLP" },
     ],
     date: "2021",
   },
@@ -40,7 +41,10 @@ export const PROJECTS: Project[] = [
     description:
       "First place winner at Godot Gamejam #4. A game developed in a team of two in one week using Godot.",
     href: "https://adnovac.itch.io/card-planes",
-    tags: [{ label: "GameDev", category: "GameDev" }],
+    tags: [
+      { label: "Game Dev", category: "GameDev" },
+      { label: "Gamejam", category: "Gamejam" },
+    ],
     date: "2022",
   },
   {
@@ -48,7 +52,7 @@ export const PROJECTS: Project[] = [
     title: "Hikari Marketing Games",
     description:
       "Panda Platformer, Hikari Picker, Hikari JRPG - marketing games created for the Hikari convention.",
-    tags: [{ label: "GameDev", category: "GameDev" }],
+    tags: [{ label: "Game Dev", category: "GameDev" }],
     date: "2023-2025",
   },
   {
@@ -58,8 +62,9 @@ export const PROJECTS: Project[] = [
       "Collection of AI/ML projects including NLP, Computer Vision, and Deep Learning experiments.",
     href: "https://github.com/SnowyCocoon/Data_Science_Portfolio",
     tags: [
-      { label: "DataScience", category: "DataScience" },
+      { label: "Data Science", category: "DataScience" },
       { label: "AI", category: "AI" },
+      { label: "ML", category: "ML" },
     ],
     date: "2021-2022",
   },
@@ -69,7 +74,7 @@ export const PROJECTS: Project[] = [
     description:
       "Comprehensive showcase of game development projects across Unity and Godot engines.",
     href: "https://github.com/SnowyCocoon/Game_Development_Portfolio",
-    tags: [{ label: "GameDev", category: "GameDev" }],
+    tags: [{ label: "Game Dev", category: "GameDev" }],
     date: "2020-2024",
   },
   {
@@ -79,7 +84,8 @@ export const PROJECTS: Project[] = [
       "VFX in Niagara, Environmental Art, Scene renders, Plugins for artists, procedural animations.",
     href: "https://www.artstation.com/snowycocoon",
     tags: [
-      { label: "TechnicalArt", category: "TechnicalArt" },
+      { label: "Technical Art", category: "TechnicalArt" },
+      { label: "VFX", category: "VFX" },
       { label: "Art", category: "Art" },
     ],
     date: "2023-2025",

@@ -70,13 +70,33 @@ export interface Project {
   title: string;
   description: string;
   href?: string;
+  /** Max 3 tags per project */
   tags: ProjectTag[];
   date: string;
 }
 
+// ── Tag categories ──────────────────────────────────────────────────────────
+// Game / Art group → bloody red spectrum
+// AI / ML / Web group → ice blue spectrum
+
+export type ProjectTagCategory =
+  // Game / Engines (brand red #b5392b)
+  | "GameDev" | "Gamejam" | "Unity" | "Godot" | "UnrealEngine" | "VR"
+  // Technical Art / Shaders (maroon #9b2226)
+  | "TechnicalArt" | "Shaders" | "VFX" | "EnvironmentalArt" | "UI" | "SubstancePack"
+  // Art / 3D (deep wine #7d1128)
+  | "Art" | "Blender" | "Modeling3D"
+  // AI / ML (deep ice #AEDBF0)
+  | "AI" | "ML" | "NeuralNetworks" | "ComputerVision" | "Math"
+  // Data / Web (light ice #CBF1FA)
+  | "DataScience" | "AgenticEngineering" | "VibeCoding" | "Web"
+  // Infrastructure (darker ice #6BA7CC)
+  | "NLP" | "Database" | "CICD";
+
 export interface ProjectTag {
+  /** Human-readable label shown on the badge */
   label: string;
-  category: "DataScience" | "AI" | "GameDev" | "TechnicalArt" | "Art" | "Web";
+  category: ProjectTagCategory;
 }
 
 export interface Certification {
@@ -90,24 +110,6 @@ export interface Certification {
   iconUrl?: string;
 }
 
-// Returns a consistent color from TAG_COLORS for any plain skill string (hash-based).
-const SKILL_COLOR_LIST = [
-  "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
-  "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
-  "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
-  "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
-  "bg-[#530708]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#fca5a5]",
-  "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
-];
-
-export function getSkillColor(skill: string): string {
-  let h = 0;
-  for (let i = 0; i < skill.length; i++) {
-    h = (h * 31 + skill.charCodeAt(i)) & 0xffff;
-  }
-  return SKILL_COLOR_LIST[h % SKILL_COLOR_LIST.length];
-}
-
 export interface Bookmark {
   id: string;
   title: string;
@@ -117,12 +119,61 @@ export interface Bookmark {
   iconSlug?: string;
 }
 
-// Ice/snow palette (#CBF1FA #AEDBF0 #6BA7CC) + SnowyCocoon brand red (#b5392b / #530708)
+// ── Tag colors ───────────────────────────────────────────────────────────────
+
 export const TAG_COLORS: Record<string, string> = {
-  DataScience:  "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
-  AI:           "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  // === Game / Art — bloody reds ===
+  // Brand red (#b5392b) — game engines & core game dev
   GameDev:      "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
-  TechnicalArt: "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
-  Art:          "bg-[#530708]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#fca5a5]",
-  Web:          "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
+  Gamejam:      "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
+  Unity:        "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]",
+  Godot:        "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]",
+  UnrealEngine: "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]",
+  VR:           "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]",
+  // Maroon (#9b2226) — technical art & shaders
+  TechnicalArt:     "bg-[#9b2226]/15 text-[#9b2226] dark:bg-[#9b2226]/20 dark:text-[#fca5a5]",
+  Shaders:          "bg-[#9b2226]/10 text-[#9b2226] dark:bg-[#9b2226]/15 dark:text-[#fca5a5]",
+  VFX:              "bg-[#9b2226]/10 text-[#9b2226] dark:bg-[#9b2226]/15 dark:text-[#fca5a5]",
+  EnvironmentalArt: "bg-[#9b2226]/10 text-[#9b2226] dark:bg-[#9b2226]/15 dark:text-[#fca5a5]",
+  UI:               "bg-[#9b2226]/10 text-[#9b2226] dark:bg-[#9b2226]/15 dark:text-[#fca5a5]",
+  SubstancePack:    "bg-[#9b2226]/10 text-[#9b2226] dark:bg-[#9b2226]/15 dark:text-[#fca5a5]",
+  // Deep wine (#7d1128) — pure art & 3D
+  Art:       "bg-[#7d1128]/10 text-[#7d1128] dark:bg-[#7d1128]/20 dark:text-[#fca5a5]",
+  Blender:   "bg-[#7d1128]/10 text-[#7d1128] dark:bg-[#7d1128]/15 dark:text-[#fca5a5]",
+  Modeling3D:"bg-[#7d1128]/10 text-[#7d1128] dark:bg-[#7d1128]/15 dark:text-[#fca5a5]",
+  // === AI / ML / Web — ice blues ===
+  // Deep ice (#AEDBF0) — core AI/ML
+  AI:             "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  ML:             "bg-[#AEDBF0]/80 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  NeuralNetworks: "bg-[#AEDBF0]/70 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  ComputerVision: "bg-[#AEDBF0]/70 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  Math:           "bg-[#AEDBF0]/60 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  // Light ice (#CBF1FA) — data & web
+  DataScience:        "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  AgenticEngineering: "bg-[#CBF1FA]/80 text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  VibeCoding:         "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
+  Web:                "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/10 dark:text-[#CBF1FA]",
+  // Darker ice (#6BA7CC) — infra & NLP
+  NLP:      "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  Database: "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  CICD:     "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
 };
+
+// ── Skill color utility (experience / education tags) ────────────────────────
+// Alternates between red and blue palette for variety, consistent per skill name.
+const SKILL_COLOR_LIST = [
+  "bg-[#b5392b]/15 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
+  "bg-[#CBF1FA] text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  "bg-[#9b2226]/15 text-[#9b2226] dark:bg-[#9b2226]/20 dark:text-[#fca5a5]",
+  "bg-[#AEDBF0] text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]",
+  "bg-[#7d1128]/10 text-[#7d1128] dark:bg-[#7d1128]/20 dark:text-[#fca5a5]",
+  "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+];
+
+export function getSkillColor(skill: string): string {
+  let h = 0;
+  for (let i = 0; i < skill.length; i++) {
+    h = (h * 31 + skill.charCodeAt(i)) & 0xffff;
+  }
+  return SKILL_COLOR_LIST[h % SKILL_COLOR_LIST.length];
+}

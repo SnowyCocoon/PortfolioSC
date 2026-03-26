@@ -9,7 +9,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         title: "Unity Developer",
-        employmentType: "Freelance",
+        employmentType: "Full-time",
         startDate: "11.2025",
         endDate: "Present",
         description: [
@@ -97,7 +97,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         title: "Unity Developer",
-        employmentType: "Contract",
+        employmentType: "Contract for service",
         startDate: "09.2021",
         endDate: "12.2024",
         description: [
@@ -144,7 +144,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         title: "VR Unity Developer",
-        employmentType: "Internship",
+        employmentType: "Internship, Full-time",
         startDate: "09.2020",
         endDate: "12.2020",
         description: [
