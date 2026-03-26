@@ -21,7 +21,7 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Unity", "C#", "AI", "Combat Design"],
       },
     ],
-    location: "Remote",
+    location: "Warsaw, Poland, Remote",
   },
   {
     id: "snowy-cocoon",
@@ -43,7 +43,28 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Substance Designer", "Blender", "Aseprite", "UEFN", "Verse", "Affinity"],
       },
     ],
-    location: "Poznan, Remote",
+    location: "Poznan, Poland, Remote",
+  },
+  {
+    id: "hikari",
+    companyName: "Hikari",
+    companyWebsite: "https://hikari.pl/",
+    logo: "/images/companies/hikari_logo.jpg",
+    positions: [
+      {
+        title: "Event Organizer, Data Analyst, Creative department lead",
+        employmentType: "Volunteer",
+        startDate: "02.2023",
+        endDate: "Present",
+        description: [
+          "Organizing the biggest anime convention in Poznań, and one of the biggest in Poland, with over 5000 attendees each year",
+          "Analyzing data to improve event planning and attendee experience",
+          "Leading the creative department to develop engaging content and marketing strategies, like advergames",
+        ],
+        skills: ["Game Development", "Event Organization", "Data Analysis", "Creative Direction", "Python", ],
+      },
+    ],
+    location: "Poznan, Poland, Hybrid",
   },
   {
     id: "manic-pixel",
@@ -65,29 +86,9 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Godot", "GDScript", "Shaders", "Game Architecture", "Technical Design"],
       },
     ],
-    location: "Poznan, Remote",
+    location: "Poznan, Poland, Remote",
   },
-  {
-    id: "hikari",
-    companyName: "Hikari",
-    companyWebsite: "https://hikari.pl/",
-    logo: "/images/companies/hikari_logo.jpg",
-    positions: [
-      {
-        title: "Event Organizer, Data Analyst, Creative department lead",
-        employmentType: "Volunteer",
-        startDate: "02.2023",
-        endDate: "Present",
-        description: [
-          "Organizing the biggest anime convention in Poznań, and one of the biggest in Poland, with over 5000 attendees each year",
-          "Analyzing data to improve event planning and attendee experience",
-          "Leading the creative department to develop engaging content and marketing strategies, like advergames",
-        ],
-        skills: ["Game Development", "Event Organization", "Data Analysis", "Creative Direction", "Python", ],
-      },
-    ],
-    location: "Poznan",
-  },
+
   {
     id: "knoocker",
     companyName: "Knoocker/Knowla",
@@ -110,7 +111,7 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Unity", "C#","UI", "Voice Recognition", "2D Skeletal Animation"],
       },
     ],
-    location: "Poznan, Poland",
+    location: "Poznan, Poland, Hybrid",
   },
   {
     id: "microtaur",
@@ -133,7 +134,7 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Godot", "Unity", "Game Design", "Twitch API"],
       },
     ],
-    location: "Krakow, Poland",
+    location: "Krakow, Poland, Remote",
   },
   {
     id: "put-vr",
@@ -157,6 +158,6 @@ export const EXPERIENCES: Experience[] = [
         skills: ["Unity", "VR", "3D Art"],
       },
     ],
-    location: "Poznan, Poland",
+    location: "Poznan, Poland, Stationary",
   },
 ];

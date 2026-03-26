@@ -16,7 +16,7 @@ Live at → **[snowycocoon.com](https://snowycocoon.com)**
 | Components | [shadcn/ui](https://ui.shadcn.com/) (Base UI) |
 | Theming | [next-themes](https://github.com/pacocoursey/next-themes) |
 | Analytics | [PostHog](https://posthog.com/) (optional) |
-| Icons | [Lucide](https://lucide.dev/) + [Simple Icons CDN](https://simpleicons.org/) |
+| Icons | [Lucide](https://lucide.dev/) + [Simple Icons CDN](https://simpleicons.org/) + [TechIcons](https://techicons.dev/) |
 | Deployment | [Vercel](https://vercel.com/) |
 
 ---
