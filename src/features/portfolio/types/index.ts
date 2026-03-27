@@ -70,7 +70,7 @@ export interface Project {
   title: string;
   description: string;
   href?: string;
-  /** Max 3 tags per project */
+  /** Max 5 tags per project; UI shows first 3 + (+N) badge */
   tags: ProjectTag[];
   date: string;
 }

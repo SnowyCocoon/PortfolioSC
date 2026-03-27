@@ -206,7 +206,7 @@ function ProjectItem({ project }: { project: Project }) {
             </p>
           </div>
 
-          {/* Tag badges — max 3 */}
+          {/* Tag badges — show first 3, then (+N) for overflow */}
           <div className="flex shrink-0 flex-col items-end gap-1">
             {project.tags.slice(0, 3).map((tag) => (
               <span
@@ -216,6 +216,11 @@ function ProjectItem({ project }: { project: Project }) {
                 {tag.label}
               </span>
             ))}
+            {project.tags.length > 3 && (
+              <span className="rounded px-1.5 py-0.5 font-mono text-[10px] bg-muted text-muted-foreground">
+                +{project.tags.length - 3}
+              </span>
+            )}
           </div>
         </div>
       </div>
