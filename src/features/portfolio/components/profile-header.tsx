@@ -64,6 +64,7 @@ export function ProfileHeader() {
               src={USER.avatar}
               alt={USER.displayName}
               fill
+              sizes="(max-width: 640px) 96px, 112px"
               className="object-cover transition-transform duration-300 group-hover:scale-110"
               priority
             />

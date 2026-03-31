@@ -4,18 +4,7 @@ import {
   PanelHeader,
   PanelTitle,
 } from "./panel";
-
-const PAPERS = [
-  {
-    id: "voice-controlled-games",
-    title: "Voice Controlled Games",
-    description:
-      "The approach and challenges of implementing speech recognition and voice control in games",
-    venue: "FedCSIS 2021",
-    award: "Best Paper Award (Young Researcher Workshop)",
-    href: "https://annals-csis.org/Volume_26/index.html",
-  },
-];
+import { RESEARCH_ITEMS } from "../data/research";
 
 export function Research() {
   return (
@@ -25,10 +14,10 @@ export function Research() {
       </PanelHeader>
 
       <div>
-        {PAPERS.map((paper) => (
+        {RESEARCH_ITEMS.map((item) => (
           <a
-            key={paper.id}
-            href={paper.href}
+            key={item.id}
+            href={item.href}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex gap-4 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60"
@@ -39,16 +28,16 @@ export function Research() {
             </div>
 
             <div className="min-w-0 flex-1">
-              <h3 className="font-mono text-xs font-bold">{paper.title}</h3>
+              <h3 className="font-mono text-xs font-bold">{item.title}</h3>
               <p className="mt-0.5 font-mono text-[10px] text-muted-foreground">
-                {paper.description}
+                {item.description}
               </p>
               <p className="mt-1 font-mono text-[10px] text-muted-foreground">
-                {paper.venue}
-                {paper.award && (
+                {item.venue}
+                {item.bonusInfo && (
                   <>
                     {" "}&bull;{" "}
-                    <span className="text-[#b5392b] dark:text-[#f87171]">{paper.award}</span>
+                    <span className="text-[#b5392b] dark:text-[#f87171]">{item.bonusInfo}</span>
                   </>
                 )}
               </p>

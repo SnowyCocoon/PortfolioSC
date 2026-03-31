@@ -29,6 +29,7 @@ function CompanyLogo({ experience }: { experience: Experience }) {
           src={experience.logo}
           alt={experience.companyName}
           fill
+          sizes="40px"
           className="object-cover"
           onError={() => setImgFailed(true)}
         />

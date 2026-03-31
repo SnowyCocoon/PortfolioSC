@@ -115,7 +115,7 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     id: "microtaur",
-    companyName: "Sidestream Games (Microtaur/Intermission Games)",
+    companyName: "Sidestream Games (Microtaur / Intermission Games)",
     companyWebsite: "https://sidestream.games/",
     logo: "/images/companies/microtaur_logo.png",
     positions: [
