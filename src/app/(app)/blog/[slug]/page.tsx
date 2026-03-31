@@ -26,7 +26,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
-    openGraph: post.coverImage ? { images: [post.coverImage] } : undefined,
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      tags: post.tags,
+      images: post.coverImage
+        ? [{ url: post.coverImage, alt: post.title }]
+        : [{ url: "/og_image.png", width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: post.coverImage ? [post.coverImage] : ["/og_image.png"],
+    },
   };
 }
 
@@ -53,6 +69,7 @@ export default async function BlogPostPage({ params }: Props) {
               src={post.coverImage}
               alt={post.title}
               fill
+              sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover"
               priority
               unoptimized

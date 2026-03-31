@@ -3,7 +3,8 @@ import { ArtPortfolioSection } from "@/features/portfolio/components/art-portfol
 
 export const metadata: Metadata = {
   title: "Art Portfolio",
-  description: "Technical art, VFX, environment art, Substance Designer materials, and more.",
+  description: "Technical art portfolio by Dominik Strzalko — shaders, VFX, environment art, Substance Designer material packs, and 3D modeling work in Unity, Godot, and Unreal Engine.",
+  alternates: { canonical: "/art-portfolio" },
 };
 
 export default function ArtPortfolioPage() {

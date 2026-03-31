@@ -3,7 +3,8 @@ import { ProjectsSection } from "@/features/portfolio/components/projects-sectio
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Game development, AI, and technical art projects.",
+  description: "39+ game development, AI/ML, technical art, and fullstack projects by Dominik Strzalko — from Unity & Godot games to shader packs and agentic AI systems.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {

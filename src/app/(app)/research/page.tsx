@@ -3,7 +3,8 @@ import { Research } from "@/features/portfolio/components/research";
 
 export const metadata: Metadata = {
   title: "Research & Presentations",
-  description: "Academic research, papers, and presentations.",
+  description: "Academic research and conference presentations by Dominik Strzalko, including a Best Paper Award at FedCSIS 2021 for voice-controlled games and game development talks at CDV/LevelUp.",
+  alternates: { canonical: "/research" },
 };
 
 export default function ResearchPage() {

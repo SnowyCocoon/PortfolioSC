@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_INFO.url),
   title: {
     default: SITE_INFO.name,
     template: `%s - ${SITE_INFO.name}`,
@@ -23,6 +24,9 @@ export const metadata: Metadata = {
   description: SITE_INFO.description,
   keywords: SITE_INFO.keywords,
   authors: [{ name: SITE_INFO.name, url: SITE_INFO.url }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -30,11 +34,20 @@ export const metadata: Metadata = {
     title: SITE_INFO.name,
     description: SITE_INFO.description,
     siteName: SITE_INFO.name,
+    images: [
+      {
+        url: "/og_image.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_INFO.name} — Game Developer, Technical Artist & AI Engineer`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_INFO.name,
     description: SITE_INFO.description,
+    images: ["/og_image.png"],
   },
   icons: {
     icon: [{ url: "/logo.png", type: "image/png" }],
@@ -55,6 +68,30 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Dominik Strzalko",
+              url: SITE_INFO.url,
+              image: `${SITE_INFO.url}/images/avatar.jpg`,
+              jobTitle: "Game Developer, Technical Artist & AI Engineer",
+              worksFor: { "@type": "Organization", name: "SnowyCocoon" },
+              address: { "@type": "PostalAddress", addressLocality: "Poznan", addressCountry: "PL" },
+              sameAs: [
+                "https://github.com/SnowyCocoon",
+                "https://linkedin.com/in/dominik-strzalko",
+              ],
+              knowsAbout: [
+                "Game Development", "Unity", "Godot", "Unreal Engine",
+                "Technical Art", "Shaders", "VFX", "Substance Designer",
+                "Artificial Intelligence", "Machine Learning", "Computer Vision", "NLP",
+              ],
+            }),
+          }}
+        />
         <Providers>{children}</Providers>
         <Analytics />
       </body>

@@ -12,7 +12,8 @@ import { BLOG_POSTS } from "@/features/portfolio/data/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Thoughts on game development, technical art, and AI engineering.",
+  description: "Articles on game development, shaders, technical art, AI/ML, and agentic engineering by Dominik Strzalko.",
+  alternates: { canonical: "/blog" },
 };
 
 export default function BlogPage() {
