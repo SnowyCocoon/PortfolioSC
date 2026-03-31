@@ -82,7 +82,7 @@ export default function RootLayout({
               address: { "@type": "PostalAddress", addressLocality: "Poznan", addressCountry: "PL" },
               sameAs: [
                 "https://github.com/SnowyCocoon",
-                "https://linkedin.com/in/dominik-strzalko",
+                "https://www.linkedin.com/in/snowycocoon/",
               ],
               knowsAbout: [
                 "Game Development", "Unity", "Godot", "Unreal Engine",
