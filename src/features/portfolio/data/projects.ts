@@ -24,7 +24,7 @@ const RAW_PROJECTS: Project[] = [
     id: "portfolio-website",
     title: "Portfolio Website",
     description: "This website! Built with Next.js 16, Tailwind CSS v4, and shadcn/ui.",
-    href: "https://www.snowycocoon.com/",
+    href: "https://github.com/SnowyCocoon/PortfolioSC",
     tags: [{ label: "Web", category: "Web" }, { label: "Agentic Eng.", category: "AgenticEngineering" }],
     date: "2026",
   },

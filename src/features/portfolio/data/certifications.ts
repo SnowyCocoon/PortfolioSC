@@ -2,6 +2,15 @@ import type { Certification } from "../types";
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    id: "claude-code-in-action",
+    title: "Claude Code in Action",
+    issuer: "Anthropic",
+    date: "04.2026",
+    certId: "sy5wjhn687vu",
+    href: "https://verify.skilljar.com/c/sy5wjhn687vu",
+    iconUrl: "/images/bonus_images/anthropic_logo.jpeg",
+  },
+  {
     id: "claude-101",
     title: "Claude 101",
     issuer: "Anthropic",

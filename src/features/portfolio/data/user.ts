@@ -27,7 +27,7 @@ export const USER: User = {
     "Data Scientist",
   ],
   about: [
-    "Game developer since **2020** (Created my first game back in 2015 in Highschool) with a strong passion for the technical side of game development. I enjoy exploring new features, technologies, and game engines.",
+    "ProfessionalGame developer since **2020** with a strong passion for the technical side of game development. I enjoy exploring new features, technologies, and game engines.",
     "Currently focusing on creating **shaders**, **materials**, and **procedural content** in my free time, while professionally developing games using **Unity** and **Godot**.",
     "Skilled in **Unity**, **Godot**, and **UE5** with experience in both 2D and 3D games, **VFX**, **procedural generation**, and **AI/ML** integration.",
     "Big **AI** enthusiast, always eager to learn about the latest advancements in the field. Extending my knowledge in **Agentic Engineering**, **AI Models/Agents** and their applications. Expertise spans **Data Science**, **NLP**, **Computer Vision**, and **Deep Learning**.",

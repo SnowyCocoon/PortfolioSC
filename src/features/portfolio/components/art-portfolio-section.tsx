@@ -15,7 +15,7 @@ import {
 } from "./panel";
 import { Button } from "@/components/ui/button";
 import { ART_PROJECTS } from "../data/projects";
-import { TAG_COLORS, type Project } from "../types";
+import { TAG_COLORS, type Project, type ProjectTagCategory } from "../types";
 
 // ── Icon / bg map for art categories ─────────────────────────────────────────
 const CATEGORY_ICONS: Record<string, ReactNode> = {
@@ -49,19 +49,44 @@ const CATEGORY_BG: Record<string, string> = {
   VR:               "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
 };
 
+// ── Build filter options from all tags used in ART_PROJECTS ──────────────────
+const TAG_OPTIONS: { category: ProjectTagCategory; label: string }[] = Array.from(
+  new Map(
+    ART_PROJECTS.flatMap((p) => p.tags).map((t) => [t.category, t.label])
+  ).entries()
+).map(([category, label]) => ({ category: category as ProjectTagCategory, label }));
+
 // ── Section ───────────────────────────────────────────────────────────────────
 export function ArtPortfolioSection() {
-  const [expanded, setExpanded] = useState(false);
-  const max = 5;
-  const visible = expanded ? ART_PROJECTS : ART_PROJECTS.slice(0, max);
+  const [filter, setFilter] = useState<string>("all");
+
+  const filtered =
+    filter === "all"
+      ? ART_PROJECTS
+      : ART_PROJECTS.filter((p) => p.tags.some((t) => t.category === filter));
 
   return (
     <Panel>
       <PanelHeader>
-        <PanelTitle>
-          Art Portfolio
-          <PanelTitleSup>{ART_PROJECTS.length}</PanelTitleSup>
-        </PanelTitle>
+        <div className="flex items-center justify-between gap-3">
+          <PanelTitle>
+            Art Portfolio
+            <PanelTitleSup>{filtered.length}</PanelTitleSup>
+          </PanelTitle>
+
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="rounded-md border border-line bg-background px-2 py-1 font-mono text-xs text-muted-foreground cursor-pointer transition-colors hover:border-[#9b2226]/50 focus:outline-none focus:border-[#9b2226]/70"
+          >
+            <option value="all">All Tags</option>
+            {TAG_OPTIONS.map(({ category, label }) => (
+              <option key={category} value={category}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
       </PanelHeader>
 
       {/* ArtStation link — pinned at top */}
@@ -82,11 +107,37 @@ export function ArtPortfolioSection() {
       </a>
 
       {/* Art project rows */}
+      {filter === "all" ? (
+        <FilterableList items={filtered} />
+      ) : (
+        <div>
+          {filtered.length === 0 ? (
+            <div className="px-4 py-6 text-center font-mono text-xs text-muted-foreground">
+              No projects for this tag yet.
+            </div>
+          ) : (
+            filtered.map((project) => (
+              <ArtProjectItem key={project.id} project={project} />
+            ))
+          )}
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+/** Show first 5 with Show More/Less when unfiltered */
+function FilterableList({ items }: { items: Project[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const max = 5;
+  const visible = expanded ? items : items.slice(0, max);
+
+  return (
+    <div>
       {visible.map((project) => (
         <ArtProjectItem key={project.id} project={project} />
       ))}
-
-      {ART_PROJECTS.length > max && (
+      {items.length > max && (
         <div className="flex justify-center border-t border-line py-2">
           <Button
             variant="ghost"
@@ -94,14 +145,14 @@ export function ArtPortfolioSection() {
             onClick={() => setExpanded(!expanded)}
             className="font-mono text-xs"
           >
-            {expanded ? "Show Less" : `Show More (${ART_PROJECTS.length - max} more)`}
+            {expanded ? "Show Less" : `Show More (${items.length - max} more)`}
             <ChevronDown
               className={`ml-1 size-3 transition-transform ${expanded ? "rotate-180" : ""}`}
             />
           </Button>
         </div>
       )}
-    </Panel>
+    </div>
   );
 }
 

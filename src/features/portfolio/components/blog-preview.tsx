@@ -24,8 +24,8 @@ export function BlogPreview() {
             className="group flex gap-4 border-b border-line px-4 py-4 transition-colors hover:bg-accent last:border-b-0"
           >
             {/* Cover image thumbnail */}
-            {post.coverImage && (
-              <div className="relative hidden h-20 w-28 shrink-0 overflow-hidden rounded-md border border-line sm:block">
+            <div className="relative hidden h-20 w-28 shrink-0 overflow-hidden rounded-md border border-line sm:block">
+              {post.coverImage ? (
                 <Image
                   src={post.coverImage}
                   alt={post.title}
@@ -34,8 +34,13 @@ export function BlogPreview() {
                   sizes="112px"
                   unoptimized
                 />
-              </div>
-            )}
+              ) : (
+                <div
+                  aria-hidden="true"
+                  className="h-full w-full bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] [--pattern-foreground:var(--color-line)]/56"
+                />
+              )}
+            </div>
 
             <div className="min-w-0 flex-1">
               <p className="font-mono text-sm font-bold group-hover:underline">
@@ -54,6 +59,13 @@ export function BlogPreview() {
                 </span>
                 <span className="font-mono text-xs text-muted-foreground">
                   {post.readingTime}
+                </span>
+                <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
+                  post.category === "personal"
+                    ? "bg-[#AEDBF0]/30 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]"
+                    : "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]"
+                }`}>
+                  {post.category === "personal" ? "Personal" : "Technical"}
                 </span>
                 <div className="flex gap-1">
                   {post.tags.slice(0, 2).map((tag) => (
