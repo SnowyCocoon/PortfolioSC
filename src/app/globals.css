@@ -132,6 +132,7 @@
   }
   html {
     @apply font-sans;
+    overflow-x: clip; /* prevent 200vw screen-line pseudo-elements from causing horizontal scroll */
   }
 }
 
