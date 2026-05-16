@@ -208,6 +208,24 @@ html:not(.dark) body {
 .blog-content pre code {
   @apply bg-transparent p-0 text-xs;
 }
+.blog-content blockquote {
+  @apply border-l-2 border-[#b5392b] pl-4 my-4 italic text-muted-foreground font-mono text-sm;
+}
+.blog-content a {
+  @apply text-[#b5392b] dark:text-[#f87171] underline-offset-2 hover:underline;
+}
+.blog-content img {
+  @apply w-full rounded-lg border border-line my-4 object-cover max-h-72;
+}
+.blog-content table {
+  @apply w-full mb-4 border-collapse font-mono text-xs;
+}
+.blog-content th {
+  @apply text-left px-3 py-2 border border-line bg-accent text-accent-foreground font-bold;
+}
+.blog-content td {
+  @apply px-3 py-2 border border-line text-muted-foreground;
+}
 
 @keyframes fadeIn {
   from {
