@@ -9,6 +9,14 @@ export interface ResearchItem {
 
 export const RESEARCH_ITEMS: ResearchItem[] = [
   {
+    id: "pyrkon-2026",
+    title: "Will AI replace game developers? A few facts about AI in game development (In Polish)",
+    description: "TBA",
+    venue: "Pyrkon 2026",
+    bonusInfo: "First presentation at a big convention",
+    href: "https://pyrkon.pl/program-pyrkonu/",
+  },
+  {
     id: "levelup-2025",
     title: "Godot - Why do we need it? (2025 version) (In Polish)",
     description: "Presentation on godot engine, its advantages and disadvantages, how popular it is and how to get started with it",

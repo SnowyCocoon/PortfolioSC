@@ -2,28 +2,6 @@ import type { Experience } from "../types";
 
 export const EXPERIENCES: Experience[] = [
   {
-    id: "3r-games",
-    companyName: "3R GAMES S.A.",
-    companyWebsite: "https://3r.games/",
-    logo: "/images/companies/3rgames_logo.jpg",
-    positions: [
-      {
-        title: "Unity Developer",
-        employmentType: "Full-time",
-        startDate: "11.2025",
-        endDate: "Present",
-        description: [
-          "Working on the new game: Punch Lunch: Foodtruck Fighter",
-          "Programming Players and Enemies Behavior trees",
-          "Programming and Designing Combat system",
-          "Improving overall experience with game from gameplay point of view",
-        ],
-        skills: ["Unity", "C#", "AI", "Combat Design"],
-      },
-    ],
-    location: "Warsaw, Poland, Remote",
-  },
-  {
     id: "snowy-cocoon",
     companyName: "SnowyCocoon (Personal Brand)",
     companyWebsite: "https://snowycocoon.com/",
@@ -46,6 +24,28 @@ export const EXPERIENCES: Experience[] = [
     location: "Poznan, Poland, Remote",
   },
   {
+  id: "sidestream-games",
+    companyName: "Sidestream Games",
+    companyWebsite: "https://sidestream.games/",
+    logo: "/images/companies/sidestream_logo.png",
+    positions: [
+      {
+        title: "Co-founder, Godot Developer",
+        employmentType: "Self-employed",
+        startDate: "02.2024",
+        endDate: "Present",
+        description: [
+          "Creating advergames for clients from the marketing and streaming industry, like InStreamly and PepsiCo",
+          "Creating our own projects and MVPs, that will land on Steam soon",
+          "Working in Godot Engine",
+          "Working with Twitch Extensions and Twitch API",
+        ],
+        skills: ["Godot", "GDScript", "AI", "Twitch API"],
+      },
+    ],
+    location: "Warsaw, Poland, Remote",
+  },
+  {
     id: "hikari",
     companyName: "Hikari",
     companyWebsite: "https://hikari.pl/",
@@ -65,6 +65,28 @@ export const EXPERIENCES: Experience[] = [
       },
     ],
     location: "Poznan, Poland, Hybrid",
+  },
+  {
+    id: "3r-games",
+    companyName: "3R GAMES S.A.",
+    companyWebsite: "https://3r.games/",
+    logo: "/images/companies/3rgames_logo.jpg",
+    positions: [
+      {
+        title: "Unity Developer",
+        employmentType: "Full-time",
+        startDate: "11.2025",
+        endDate: "05.2026",
+        description: [
+          "Working on the new game: Punch Lunch: Foodtruck Fighter",
+          "Programming Players and Enemies Behavior trees",
+          "Programming and Designing Combat system",
+          "Improving overall experience with game from gameplay point of view",
+        ],
+        skills: ["Unity", "C#", "AI", "Combat Design"],
+      },
+    ],
+    location: "Warsaw, Poland, Remote",
   },
   {
     id: "manic-pixel",
@@ -115,21 +137,20 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     id: "microtaur",
-    companyName: "Sidestream Games (Microtaur / Intermission Games)",
-    companyWebsite: "https://sidestream.games/",
+    companyName: "Microtaur / Intermission Games",
+    companyWebsite: "https://microtaur.com/",
     logo: "/images/companies/microtaur_logo.png",
     positions: [
       {
-        title: "Co-founder, Godot Developer, Game Designer",
+        title: "Godot Developer, Unity Developer, Game Designer",
         employmentType: "Self-employed",
         startDate: "04.2020",
         endDate: "12.2024",
         description: [
-          "Creating a marketing game for InStreamly and PepsiCo",
-          "Creating our own projects and MVPs",
-          "Creating MVPs and Demos for big clients from the marketing and streaming industry",
+          "Creating advergames for clients from the marketing and streaming industry",
+          "Microtaur later branched into Intermission Games, where we are working on our own projects, including a game that will land on Steam soon",
           "Working in both Godot and Unity Engines",
-          "Working with Twitch Extensions and Twitch API",
+          "Created Papamobile game that is avaliable on Steam",
         ],
         skills: ["Godot", "Unity", "Game Design", "Twitch API"],
       },
