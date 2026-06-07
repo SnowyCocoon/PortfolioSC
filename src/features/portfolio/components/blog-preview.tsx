@@ -7,6 +7,7 @@ import {
   PanelTitle,
 } from "./panel";
 import { BLOG_POSTS } from "../data/blog";
+import { getSkillColor } from "../types";
 
 export function BlogPreview() {
   const recent = BLOG_POSTS.slice(0, 3);
@@ -71,7 +72,7 @@ export function BlogPreview() {
                   {post.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded bg-accent px-1.5 py-0.5 font-mono text-[10px] text-accent-foreground"
+                      className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${getSkillColor(tag)}`}
                     >
                       {tag}
                     </span>

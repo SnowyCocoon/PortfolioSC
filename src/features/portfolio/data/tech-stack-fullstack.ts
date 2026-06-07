@@ -7,6 +7,6 @@ export const TECH_STACK_FULLSTACK: TechStackItem[] = [
   { key: "tailwind",   title: "Tailwind CSS",href: "https://tailwindcss.com",        iconSlug: "tailwindcss" },
   { key: "docker",     title: "Docker",      href: "https://www.docker.com",         iconSlug: "docker" },
   { key: "jenkins",    title: "Jenkins",     href: "https://www.jenkins.io",         iconSlug: "jenkins" },
-  { key: "shadcn",     title: "shadcn/ui",   href: "https://ui.shadcn.com",          iconSlug: "shadcnui" },
+  { key: "linux",      title: "Linux",       href: "https://kernel.org",             iconSlug: "linux" },
   { key: "supabase",   title: "Supabase",    href: "https://supabase.com",           iconSlug: "supabase" },
 ];

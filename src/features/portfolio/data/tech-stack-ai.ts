@@ -7,6 +7,6 @@ export const TECH_STACK_AI: TechStackItem[] = [
   { key: "matplotlib", title: "Matplotlib", href: "https://matplotlib.org",         iconUrl: "/icons/matplotlib.svg" },
   { key: "pytorch",    title: "PyTorch",    href: "https://pytorch.org",            iconSlug: "pytorch" },
   { key: "tensorflow", title: "TensorFlow", href: "https://www.tensorflow.org",     iconSlug: "tensorflow" },
-  { key: "cursor",     title: "Cursor",     href: "https://cursor.com",             iconSlug: "cursor" },
+  { key: "openclaw",   title: "OpenClaw",   href: "https://openclaw.ai",            iconUrl: "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/openclaw.svg" },
   { key: "chatgpt",    title: "ChatGPT",    href: "https://chat.openai.com",        iconUrl: "/icons/chatgpt.svg" },
 ];

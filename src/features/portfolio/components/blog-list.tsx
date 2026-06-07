@@ -11,6 +11,7 @@ import {
   PanelTitleSup,
 } from "./panel";
 import { BLOG_POSTS } from "../data/blog";
+import { getSkillColor } from "../types";
 
 type Category = "technical" | "personal" | "all";
 
@@ -113,11 +114,11 @@ export function BlogList() {
                   }`}>
                     {post.category === "personal" ? "Personal" : "Technical"}
                   </span>
-                  <div className="flex gap-1">
+                  <div className="flex flex-wrap gap-1">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded bg-accent px-1.5 py-0.5 font-mono text-xs text-accent-foreground"
+                        className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${getSkillColor(tag)}`}
                       >
                         {tag}
                       </span>
