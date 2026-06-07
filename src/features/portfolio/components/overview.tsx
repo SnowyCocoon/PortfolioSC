@@ -49,7 +49,7 @@ export function Overview() {
                 <span className="font-bold text-foreground">@{USER.currentJobs[0].company}</span>
               </>
             }
-            href="https://3r.games/"
+            href="https://sidestream.games/"
           />
           <OverviewItem
             icon={<Heart className="size-4" />}
