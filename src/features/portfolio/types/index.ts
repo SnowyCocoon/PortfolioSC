@@ -2,7 +2,7 @@ export interface User {
   displayName: string;
   username: string;
   jobTitle: string;
-  currentJobs: { company: string; title: string }[];
+  currentJobs: { company: string; title: string; href: string }[];
   volunteerRole?: string;
   location: string;
   locationSoon?: string;

@@ -5,8 +5,8 @@ export const USER: User = {
   username: "snowycocoon",
   jobTitle: "Game Developer | Technical Artist | AI Engineer",
   currentJobs: [
-    { company: "sidestream.games", title: "Godot Developer" },
-    { company: "Hikari", title: "Event Organizer" },
+    { company: "sidestream.games", title: "Godot Developer", href: "https://sidestream.games/" },
+    { company: "Hikari", title: "Event Organizer", href: "https://hikari.pl/" },
   ],
   volunteerRole: "Event Organizer @Hikari",
   location: "Poznań, Poland",

@@ -49,17 +49,17 @@ export function Overview() {
                 <span className="font-bold text-foreground">@{USER.currentJobs[0].company}</span>
               </>
             }
-            href="https://sidestream.games/"
+            href={USER.currentJobs[0].href}
           />
           <OverviewItem
             icon={<Heart className="size-4" />}
             label={
               <>
-                Event Organizer{" "}
-                <span className="font-bold text-foreground">@Hikari</span>
+                {USER.currentJobs[1].title}{" "}
+                <span className="font-bold text-foreground">@{USER.currentJobs[1].company}</span>
               </>
             }
-            href="https://hikari.pl/"
+            href={USER.currentJobs[1].href}
           />
           <OverviewItem
             icon={<MapPin className="size-4" />}
