@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, X, ArrowRight, FolderOpen } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import {
+  ArrowUpRight, X, ArrowRight, FolderOpen,
   Gamepad2, Brain, BarChart3, Paintbrush2, Palette, Globe2,
   Trophy, Glasses, Sparkles, Zap, Trees, LayoutGrid, Layers, Box,
   Network, Eye, Calculator, Bot, Wand2, Database, GitBranch, MessageSquare,
   FileCode, Wrench, Braces,
+  type LucideIcon,
 } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle } from "./panel";
 import { PROJECTS } from "../data/projects";
