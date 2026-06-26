@@ -1,37 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
-  ArrowUpRight, X, ChevronDown, ExternalLink,
-  Paintbrush2, Sparkles, Zap, Trees, Layers, Palette, Box, FolderOpen,
+  ArrowUpRight, X, ChevronDown, FolderOpen,
+  Paintbrush2, Sparkles, Zap, Trees, Layers, Palette, Box,
   Gamepad2, Glasses,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
-  Panel,
-  PanelHeader,
-  PanelTitle,
-  PanelTitleSup,
+  Panel, PanelHeader, PanelTitle, PanelTitleSup,
 } from "./panel";
 import { Button } from "@/components/ui/button";
 import { ART_PROJECTS } from "../data/projects";
 import { TAG_COLORS, type Project, type ProjectTagCategory } from "../types";
 
-// ── Icon / bg map for art categories ─────────────────────────────────────────
-const CATEGORY_ICONS: Record<string, ReactNode> = {
-  TechnicalArt:     <Paintbrush2 className="size-4" />,
-  Shaders:          <Sparkles className="size-4" />,
-  VFX:              <Zap className="size-4" />,
-  EnvironmentalArt: <Trees className="size-4" />,
-  SubstancePack:    <Layers className="size-4" />,
-  Art:              <Palette className="size-4" />,
-  Blender:          <Box className="size-4" />,
-  Modeling3D:       <Box className="size-4" />,
-  // engine tags that may be primary on cross-discipline projects
-  Unity:            <Gamepad2 className="size-4" />,
-  Godot:            <Gamepad2 className="size-4" />,
-  UnrealEngine:     <Gamepad2 className="size-4" />,
-  VR:               <Glasses className="size-4" />,
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  TechnicalArt: Paintbrush2, Shaders: Sparkles, VFX: Zap,
+  EnvironmentalArt: Trees, SubstancePack: Layers,
+  Art: Palette, Blender: Box, Modeling3D: Box,
+  Unity: Gamepad2, Godot: Gamepad2, UnrealEngine: Gamepad2, VR: Glasses,
 };
 
 const CATEGORY_BG: Record<string, string> = {
@@ -49,17 +37,27 @@ const CATEGORY_BG: Record<string, string> = {
   VR:               "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/20 dark:text-[#f87171]",
 };
 
-// ── Build filter options from all tags used in ART_PROJECTS ──────────────────
+function platformBadge(href?: string): { src: string; alt: string } | null {
+  if (!href) return null;
+  if (href.includes("steampowered.com")) return { src: "/images/bonus_images/steam_logo.png", alt: "On Steam" };
+  if (href.includes("itch.io"))          return { src: "/images/bonus_images/itch_logo.png", alt: "On itch.io" };
+  if (href.includes("artstation.com"))   return { src: "/images/bonus_images/artstation_logo.png", alt: "On ArtStation" };
+  if (href.includes("github.com"))       return { src: "/images/bonus_images/GitHub Colored.png", alt: "On GitHub" };
+  if (href.includes("hikari.pl"))        return { src: "/images/companies/hikari_logo.jpg", alt: "Hikari Convention" };
+  return null;
+}
+
 const TAG_OPTIONS: { category: ProjectTagCategory; label: string }[] = Array.from(
-  new Map(
-    ART_PROJECTS.flatMap((p) => p.tags).map((t) => [t.category, t.label])
-  ).entries()
+  new Map(ART_PROJECTS.flatMap((p) => p.tags).map((t) => [t.category, t.label])).entries()
 ).map(([category, label]) => ({ category: category as ProjectTagCategory, label }));
 
-// ── Section ───────────────────────────────────────────────────────────────────
+const ART_CATS = new Set([
+  "TechnicalArt", "Shaders", "VFX", "EnvironmentalArt",
+  "SubstancePack", "Art", "Blender", "Modeling3D",
+]);
+
 export function ArtPortfolioSection() {
   const [filter, setFilter] = useState<string>("all");
-
   const filtered =
     filter === "all"
       ? ART_PROJECTS
@@ -73,7 +71,6 @@ export function ArtPortfolioSection() {
             Art Portfolio
             <PanelTitleSup>{filtered.length}</PanelTitleSup>
           </PanelTitle>
-
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -81,32 +78,12 @@ export function ArtPortfolioSection() {
           >
             <option value="all">All Tags</option>
             {TAG_OPTIONS.map(({ category, label }) => (
-              <option key={category} value={category}>
-                {label}
-              </option>
+              <option key={category} value={category}>{label}</option>
             ))}
           </select>
         </div>
       </PanelHeader>
 
-      {/* ArtStation link — pinned at top */}
-      <a
-        href="https://www.artstation.com/snowycocoon"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex items-center gap-4 border-b border-line px-4 py-3 transition-colors hover:bg-accent/60"
-      >
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-[#13AFF0]/10 text-[#13AFF0] dark:bg-[#13AFF0]/15 dark:text-[#13AFF0]">
-          <ExternalLink className="size-4" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="font-mono text-xs font-bold">ArtStation Portfolio</p>
-          <p className="font-mono text-xs text-muted-foreground">artstation.com/snowycocoon</p>
-        </div>
-        <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-      </a>
-
-      {/* Art project rows */}
       {filter === "all" ? (
         <FilterableList items={filtered} />
       ) : (
@@ -116,9 +93,7 @@ export function ArtPortfolioSection() {
               No projects for this tag yet.
             </div>
           ) : (
-            filtered.map((project) => (
-              <ArtProjectItem key={project.id} project={project} />
-            ))
+            filtered.map((p) => <ArtProjectItem key={p.id} project={p} />)
           )}
         </div>
       )}
@@ -126,29 +101,17 @@ export function ArtPortfolioSection() {
   );
 }
 
-/** Show first 5 with Show More/Less when unfiltered */
 function FilterableList({ items }: { items: Project[] }) {
-  const [expanded, setExpanded] = useState(false);
-  const max = 5;
-  const visible = expanded ? items : items.slice(0, max);
-
+  const [expanded, setExpanded] = useState(true);
+  const visible = expanded ? items : items.slice(0, 5);
   return (
     <div>
-      {visible.map((project) => (
-        <ArtProjectItem key={project.id} project={project} />
-      ))}
-      {items.length > max && (
+      {visible.map((p) => <ArtProjectItem key={p.id} project={p} />)}
+      {items.length > 5 && (
         <div className="flex justify-center border-t border-line py-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setExpanded(!expanded)}
-            className="font-mono text-xs"
-          >
-            {expanded ? "Show Less" : `Show More (${items.length - max} more)`}
-            <ChevronDown
-              className={`ml-1 size-3 transition-transform ${expanded ? "rotate-180" : ""}`}
-            />
+          <Button variant="ghost" size="sm" onClick={() => setExpanded(!expanded)} className="font-mono text-xs">
+            {expanded ? "Show Less" : `Show More (${items.length - 5} more)`}
+            <ChevronDown className={`ml-1 size-3 transition-transform ${expanded ? "rotate-180" : ""}`} />
           </Button>
         </div>
       )}
@@ -156,54 +119,45 @@ function FilterableList({ items }: { items: Project[] }) {
   );
 }
 
-// ── Art project row ───────────────────────────────────────────────────────────
-// Picks the first art-discipline tag for the icon, falling back to first tag
-const ART_CATS = new Set([
-  "TechnicalArt", "Shaders", "VFX", "EnvironmentalArt",
-  "SubstancePack", "Art", "Blender", "Modeling3D",
-]);
-
 function ArtProjectItem({ project }: { project: Project }) {
-  const primaryTag =
-    project.tags.find((t) => ART_CATS.has(t.category)) ?? project.tags[0];
+  const primaryTag = project.tags.find((t) => ART_CATS.has(t.category)) ?? project.tags[0];
   const primaryCategory = primaryTag?.category;
-  const icon = primaryCategory
-    ? (CATEGORY_ICONS[primaryCategory] ?? <FolderOpen className="size-4" />)
-    : <FolderOpen className="size-4" />;
-  const bgCls = primaryCategory
-    ? (CATEGORY_BG[primaryCategory] ?? "bg-muted text-muted-foreground")
-    : "bg-muted text-muted-foreground";
+  const IconComponent: LucideIcon = CATEGORY_ICONS[primaryCategory] ?? FolderOpen;
+  const bgCls = CATEGORY_BG[primaryCategory] ?? "bg-muted text-muted-foreground";
 
   const inner = (
     <>
-      <div className={`flex size-9 shrink-0 items-center justify-center rounded-lg border border-line ${bgCls}`}>
-        {icon}
+      {/* Desktop: large thumbnail */}
+      <div className="relative hidden h-24 w-36 shrink-0 overflow-hidden rounded-md border border-line sm:block">
+        {project.coverImage ? (
+          <Image src={project.coverImage} alt={project.title} fill sizes="144px" className="object-cover" unoptimized />
+        ) : (
+          <div className={`relative flex h-full w-full items-center justify-center ${bgCls}`}>
+            <div className="absolute inset-0 bg-[repeating-linear-gradient(315deg,var(--color-line)_0,var(--color-line)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] opacity-30" />
+            <IconComponent className="relative z-10 size-7" />
+          </div>
+        )}
+        {platformBadge(project.href) && (
+          <div className="absolute bottom-1.5 right-1.5 z-20 rounded bg-black/70 p-1">
+            <Image src={platformBadge(project.href)!.src} alt={platformBadge(project.href)!.alt} width={14} height={14} className="opacity-90" unoptimized />
+          </div>
+        )}
+      </div>
+      {/* Mobile: small icon */}
+      <div className={`flex size-9 shrink-0 items-center justify-center rounded-lg border border-line sm:hidden ${bgCls}`}>
+        <IconComponent className="size-4" />
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0 flex-1">
-            <h3 className="font-mono text-xs font-bold">{project.title}</h3>
-            <p className="font-mono text-xs text-muted-foreground">{project.date}</p>
-            <p className="mt-0.5 font-mono text-xs text-muted-foreground">{project.description}</p>
-          </div>
-
-          {/* Tags — show first 3 + (+N) overflow */}
-          <div className="flex shrink-0 flex-col items-end gap-1">
-            {project.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag.label}
-                className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${TAG_COLORS[tag.category] ?? "bg-muted text-muted-foreground"}`}
-              >
-                {tag.label}
-              </span>
-            ))}
-            {project.tags.length > 3 && (
-              <span className="rounded px-1.5 py-0.5 font-mono text-[10px] bg-muted text-muted-foreground">
-                +{project.tags.length - 3}
-              </span>
-            )}
-          </div>
+        <h3 className="font-mono text-sm font-bold">{project.title}</h3>
+        <p className="mt-0.5 line-clamp-2 font-mono text-xs text-muted-foreground">{project.description}</p>
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          <span className="font-mono text-xs text-muted-foreground">{project.date}</span>
+          {project.tags.slice(0, 5).map((tag) => (
+            <span key={tag.label} className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${TAG_COLORS[tag.category] ?? "bg-muted text-muted-foreground"}`}>
+              {tag.label}
+            </span>
+          ))}
         </div>
       </div>
 
@@ -215,22 +169,9 @@ function ArtProjectItem({ project }: { project: Project }) {
     </>
   );
 
+  const cls = "group flex gap-4 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60";
   if (project.href) {
-    return (
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex gap-4 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60"
-      >
-        {inner}
-      </a>
-    );
+    return <a href={project.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>;
   }
-
-  return (
-    <div className="flex gap-4 border-b border-line px-4 py-3 last:border-b-0">
-      {inner}
-    </div>
-  );
+  return <div className={cls}>{inner}</div>;
 }

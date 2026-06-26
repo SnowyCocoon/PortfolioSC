@@ -3,7 +3,7 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
-  category: "technical" | "personal";
+  category: "technical" | "personal" | "art";
   tags: string[];
   readingTime: string;
   coverImage?: string;

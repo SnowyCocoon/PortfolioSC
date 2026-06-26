@@ -7,7 +7,7 @@ import { TechStackGroup } from "@/features/portfolio/components/tech-stack-group
 import { BlogPreview } from "@/features/portfolio/components/blog-preview";
 import { Experiences } from "@/features/portfolio/components/experiences";
 import { EducationSection } from "@/features/portfolio/components/education-section";
-import { ProjectsSection } from "@/features/portfolio/components/projects-section";
+import { RecentPortfolioPreview } from "@/features/portfolio/components/recent-portfolio-preview";
 import { Research } from "@/features/portfolio/components/research";
 import { CertificationsSection } from "@/features/portfolio/components/certifications-section";
 import { BookmarksSection } from "@/features/portfolio/components/bookmarks-section";
@@ -45,7 +45,7 @@ export default function HomePage() {
       <ScreenLine />
       <EducationSection />
       <ScreenLine />
-      <ProjectsSection />
+      <RecentPortfolioPreview />
       <ScreenLine />
       <Research />
       <ScreenLine />

@@ -13,10 +13,10 @@ function parseEndYear(date: string): number {
 const RAW_PROJECTS: Project[] = [
   // ── 2026 ──────────────────────────────────────────────────────────────────
   {
-    id: "hikari-unannounced",
-    title: "Hikari Convention New Unannounced Game",
-    description: "New game in development for the Hikari anime convention. More info soon!",
-    href: "https://hikari.pl/",
+    id: "hikari-dressup-game",
+    title: "Hikari Dressup Game",
+    description: "New game in development for the Hikari anime convention. I'm the product owner, and main developer.",
+    href: "https://hikari.pl/ubieranka-galeria/",
     tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }],
     date: "2026-Present",
   },
@@ -112,6 +112,8 @@ const RAW_PROJECTS: Project[] = [
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
+      { label: "Python", category: "Python" },
+      { label: "Tool", category: "Tool" },
     ],
     date: "2025",
   },
@@ -164,12 +166,12 @@ const RAW_PROJECTS: Project[] = [
     date: "2025",
   },
   {
-    id: "unannounced-mpdg",
-    title: "Unannounced Game from MPDG",
+    id: "mobb-inc",
+    title: "mobb_inc.",
     description: "Game in development at Manic Pixel Dream Games. More info soon!",
-    href: "https://manicpixeldream.games/",
-    tags: [{ label: "Game Dev", category: "GameDev" }],
-    date: "2025",
+    href: "https://store.steampowered.com/app/4779440/mobb_inc/",
+    tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Godot", category: "Godot" }],
+    date: "2025-Present (still helping with the project)",
   },
 
   // ── 2023–2025 ─────────────────────────────────────────────────────────────
@@ -190,7 +192,12 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Custom Unity editor tools for artists — streamlining level design, asset placement, and iteration workflows.",
     href: "https://www.artstation.com/artwork/L4ava0",
-    tags: [{ label: "Technical Art", category: "TechnicalArt" }, { label: "Unity", category: "Unity" }],
+    tags: [
+      { label: "Technical Art", category: "TechnicalArt" },
+      { label: "Unity", category: "Unity" },
+      { label: "Tool", category: "Tool" },
+      { label: "C#", category: "CSharp" },
+    ],
     date: "2024",
   },
   {
@@ -429,7 +436,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "My first real project on itch.io — help Maya escape Yomi (the Land of Darkness) across 15 levels with 45 collectible hearts.",
     href: "https://snowycocoon.itch.io/onryou-pit",
-    tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }, { label: "Art", category: "Art" }],
+    tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }],
     date: "2019",
   },
 ];
@@ -437,6 +444,23 @@ const RAW_PROJECTS: Project[] = [
 // Sort by end year descending (latest project first)
 export const PROJECTS: Project[] = RAW_PROJECTS.slice().sort(
   (a, b) => parseEndYear(b.date) - parseEndYear(a.date)
+);
+
+// ── Tech portfolio subset ──────────────────────────────────────────────────────
+// Projects that have at least one coding/programming tag.
+// Pure art/asset packs (only TechnicalArt, SubstancePack, Art, EnvironmentalArt, Blender, Modeling3D)
+// are excluded — they belong in the Art Portfolio only.
+const TECH_CATEGORIES = new Set([
+  "GameDev", "Gamejam", "Godot", "VR",
+  "Shaders", "VFX",
+  "AI", "ML", "NeuralNetworks", "ComputerVision", "Math",
+  "DataScience", "AgenticEngineering", "VibeCoding",
+  "Web", "NLP", "Database", "CICD",
+  "Python", "Tool", "CSharp",
+]);
+
+export const TECH_PROJECTS: Project[] = PROJECTS.filter((p) =>
+  p.tags.some((t) => TECH_CATEGORIES.has(t.category))
 );
 
 // ── Art portfolio subset ───────────────────────────────────────────────────────

@@ -1,8 +1,6 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, X, ChevronDown, FolderOpen } from "lucide-react";
+import { ArrowUpRight, X, ArrowRight, FolderOpen } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
   Gamepad2, Brain, BarChart3, Paintbrush2, Palette, Globe2,
@@ -10,12 +8,9 @@ import {
   Network, Eye, Calculator, Bot, Wand2, Database, GitBranch, MessageSquare,
   FileCode, Wrench, Braces,
 } from "lucide-react";
-import {
-  Panel, PanelHeader, PanelTitle, PanelTitleSup,
-} from "./panel";
-import { Button } from "@/components/ui/button";
-import { TECH_PROJECTS } from "../data/projects";
-import { TAG_COLORS, type Project, type ProjectTagCategory } from "../types";
+import { Panel, PanelHeader, PanelTitle } from "./panel";
+import { PROJECTS } from "../data/projects";
+import { TAG_COLORS, type Project } from "../types";
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   GameDev: Gamepad2, Gamejam: Trophy, Unity: Gamepad2, Godot: Gamepad2,
@@ -73,72 +68,48 @@ function platformBadge(href?: string): { src: string; alt: string } | null {
   return null;
 }
 
-const TAG_OPTIONS: { category: ProjectTagCategory; label: string }[] = Array.from(
-  new Map(TECH_PROJECTS.flatMap((p) => p.tags).map((t) => [t.category, t.label])).entries()
-).map(([category, label]) => ({ category: category as ProjectTagCategory, label }));
+const RECENT = PROJECTS.slice(0, 5);
 
-export function ProjectsSection() {
-  const [filter, setFilter] = useState<string>("all");
-  const filtered =
-    filter === "all" ? TECH_PROJECTS : TECH_PROJECTS.filter((p) => p.tags.some((t) => t.category === filter));
-
+export function RecentPortfolioPreview() {
   return (
     <Panel>
       <PanelHeader>
-        <div className="flex items-center justify-between gap-3">
-          <PanelTitle>
-            Tech Portfolio
-            <PanelTitleSup>{filtered.length}</PanelTitleSup>
-          </PanelTitle>
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="rounded-md border border-line bg-background px-2 py-1 font-mono text-xs text-muted-foreground cursor-pointer transition-colors hover:border-[#b5392b]/50 focus:outline-none focus:border-[#b5392b]/70"
-          >
-            <option value="all">All Tags</option>
-            {TAG_OPTIONS.map(({ category, label }) => (
-              <option key={category} value={category}>{label}</option>
-            ))}
-          </select>
-        </div>
+        <PanelTitle>Portfolio</PanelTitle>
       </PanelHeader>
 
-      {filter === "all" ? (
-        <FilterableList items={filtered} />
-      ) : (
-        <div>
-          {filtered.length === 0 ? (
-            <div className="px-4 py-6 text-center font-mono text-xs text-muted-foreground">
-              No projects for this tag yet.
-            </div>
-          ) : (
-            filtered.map((p) => <ProjectItem key={p.id} project={p} />)
-          )}
-        </div>
-      )}
+      <div>
+        {RECENT.map((project) => (
+          <PortfolioPreviewItem key={project.id} project={project} />
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 border-t border-line">
+        <Link
+          href="/tech-portfolio"
+          className="group flex items-center justify-between border-r border-line px-4 py-5 transition-colors hover:bg-accent"
+        >
+          <div className="flex items-center gap-2">
+            <Gamepad2 className="size-4 text-muted-foreground" />
+            <span className="font-mono text-sm font-medium">Tech Portfolio</span>
+          </div>
+          <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+        <Link
+          href="/art-portfolio"
+          className="group flex items-center justify-between px-4 py-5 transition-colors hover:bg-accent"
+        >
+          <div className="flex items-center gap-2">
+            <Palette className="size-4 text-muted-foreground" />
+            <span className="font-mono text-sm font-medium">Art Portfolio</span>
+          </div>
+          <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
     </Panel>
   );
 }
 
-function FilterableList({ items }: { items: Project[] }) {
-  const [expanded, setExpanded] = useState(true);
-  const visible = expanded ? items : items.slice(0, 5);
-  return (
-    <div>
-      {visible.map((p) => <ProjectItem key={p.id} project={p} />)}
-      {items.length > 5 && (
-        <div className="flex justify-center border-t border-line py-2">
-          <Button variant="ghost" size="sm" onClick={() => setExpanded(!expanded)} className="font-mono text-xs">
-            {expanded ? "Show Less" : "Show More"}
-            <ChevronDown className={`ml-1 size-3 transition-transform ${expanded ? "rotate-180" : ""}`} />
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export function ProjectItem({ project }: { project: Project }) {
+function PortfolioPreviewItem({ project }: { project: Project }) {
   const primaryCategory = project.tags[0]?.category;
   const IconComponent: LucideIcon = CATEGORY_ICONS[primaryCategory] ?? FolderOpen;
   const bgCls = CATEGORY_BG[primaryCategory] ?? "bg-muted text-muted-foreground";

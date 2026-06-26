@@ -29,7 +29,7 @@ export const SITE_INFO = {
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
-  { label: "Projects", href: "/projects" },
+  { label: "Tech Portfolio", href: "/tech-portfolio" },
   { label: "Art Portfolio", href: "/art-portfolio" },
   { label: "Research", href: "/research" },
   { label: "Hobby", href: "/hobby" },

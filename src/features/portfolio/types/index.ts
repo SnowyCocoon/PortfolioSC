@@ -70,7 +70,8 @@ export interface Project {
   title: string;
   description: string;
   href?: string;
-  /** Max 5 tags per project; UI shows first 3 + (+N) badge */
+  coverImage?: string;
+  /** Max 5 tags per project */
   tags: ProjectTag[];
   date: string;
 }
@@ -91,7 +92,9 @@ export type ProjectTagCategory =
   // Data / Web (light ice #CBF1FA)
   | "DataScience" | "AgenticEngineering" | "VibeCoding" | "Web"
   // Infrastructure (darker ice #6BA7CC)
-  | "NLP" | "Database" | "CICD";
+  | "NLP" | "Database" | "CICD"
+  // Languages / tooling
+  | "Python" | "Tool" | "CSharp";
 
 export interface ProjectTag {
   /** Human-readable label shown on the badge */
@@ -157,6 +160,10 @@ export const TAG_COLORS: Record<string, string> = {
   NLP:      "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
   Database: "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
   CICD:     "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  // Languages / tooling
+  Python: "bg-[#CBF1FA]/70 text-[#1a5c7a] dark:bg-[#CBF1FA]/15 dark:text-[#CBF1FA]",
+  Tool:   "bg-[#6BA7CC]/25 text-[#1a4d6e] dark:bg-[#6BA7CC]/20 dark:text-[#6BA7CC]",
+  CSharp: "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]",
 };
 
 // ── Skill color utility (experience / education tags) ────────────────────────

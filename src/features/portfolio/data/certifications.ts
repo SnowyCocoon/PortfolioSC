@@ -2,6 +2,15 @@ import type { Certification } from "../types";
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    id: "ai-agents-fundamentals",
+    title: "AI Agents Fundamentals",
+    issuer: "Hugging Face",
+    date: "06.2026",
+    certId: "SnowyCocoon",
+    href: "https://huggingface.co/datasets/agents-course/certificates/resolve/main/certificates/SnowyCocoon/2026-06-26.png",
+    iconUrl: "/images/bonus_images/huggingface-icon.png",
+  },
+  {
     id: "claude-code-in-action",
     title: "Claude Code in Action",
     issuer: "Anthropic",

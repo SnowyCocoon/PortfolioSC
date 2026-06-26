@@ -47,9 +47,6 @@ export function BlogPreview() {
               <p className="font-mono text-sm font-bold group-hover:underline">
                 {post.title}
               </p>
-              <p className="mt-0.5 line-clamp-2 font-mono text-xs text-muted-foreground">
-                {post.description}
-              </p>
               <div className="mt-2 flex items-center gap-3">
                 <span className="font-mono text-xs text-muted-foreground">
                   {new Date(post.date).toLocaleDateString("en-GB", {
@@ -64,9 +61,11 @@ export function BlogPreview() {
                 <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
                   post.category === "personal"
                     ? "bg-[#AEDBF0]/30 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]"
+                    : post.category === "art"
+                    ? "bg-[#7d1128]/15 text-[#7d1128] dark:bg-[#7d1128]/20 dark:text-[#fca5a5]"
                     : "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]"
                 }`}>
-                  {post.category === "personal" ? "Personal" : "Technical"}
+                  {post.category === "personal" ? "Personal" : post.category === "art" ? "Art" : "Technical"}
                 </span>
                 <div className="flex gap-1">
                   {post.tags.slice(0, 2).map((tag) => (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Terminal, User } from "lucide-react";
+import { ArrowUpRight, Terminal, User, Palette } from "lucide-react";
 import {
   Panel,
   PanelHeader,
@@ -13,7 +13,7 @@ import {
 import { BLOG_POSTS } from "../data/blog";
 import { getSkillColor } from "../types";
 
-type Category = "technical" | "personal" | "all";
+type Category = "technical" | "personal" | "art" | "all";
 
 export function BlogList() {
   const [category, setCategory] = useState<Category>("all");
@@ -54,6 +54,13 @@ export function BlogList() {
               label="Personal"
               activeClass="bg-[#AEDBF0]/30 text-[#1a4d6e] border-[#AEDBF0]/60 dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0] dark:border-[#AEDBF0]/30"
             />
+            <CategoryButton
+              active={category === "art"}
+              onClick={() => setCategory("art")}
+              icon={<Palette className="size-3" />}
+              label="Art"
+              activeClass="bg-[#7d1128]/15 text-[#7d1128] border-[#7d1128]/30 dark:bg-[#7d1128]/20 dark:text-[#fca5a5] dark:border-[#7d1128]/40"
+            />
           </div>
         </div>
       </PanelHeader>
@@ -92,9 +99,6 @@ export function BlogList() {
                 <p className="font-mono text-sm font-bold group-hover:underline">
                   {post.title}
                 </p>
-                <p className="mt-1 line-clamp-2 font-mono text-xs text-muted-foreground">
-                  {post.description}
-                </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
                   <span className="font-mono text-xs text-muted-foreground">
                     {new Date(post.date).toLocaleDateString("en-GB", {
@@ -110,9 +114,11 @@ export function BlogList() {
                   <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
                     post.category === "personal"
                       ? "bg-[#AEDBF0]/30 text-[#1a4d6e] dark:bg-[#AEDBF0]/15 dark:text-[#AEDBF0]"
+                      : post.category === "art"
+                      ? "bg-[#7d1128]/15 text-[#7d1128] dark:bg-[#7d1128]/20 dark:text-[#fca5a5]"
                       : "bg-[#b5392b]/10 text-[#b5392b] dark:bg-[#b5392b]/15 dark:text-[#f87171]"
                   }`}>
-                    {post.category === "personal" ? "Personal" : "Technical"}
+                    {post.category === "personal" ? "Personal" : post.category === "art" ? "Art" : "Technical"}
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {post.tags.map((tag) => (

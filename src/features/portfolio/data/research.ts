@@ -11,10 +11,10 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
   {
     id: "pyrkon-2026",
     title: "Will AI replace game developers? A few facts about AI in game development (In Polish)",
-    description: "TBA",
+    description: "How AI is used in game development, what are its advantages and disadvantages, and how it will affect the future of the industry",
     venue: "Pyrkon 2026",
-    bonusInfo: "First presentation at a big convention",
-    href: "https://pyrkon.pl/program-pyrkonu/",
+    bonusInfo: "First presentation at a big convention. almost full house, 70+ people in the audience, at 10:00 PM Saturday night. I was pretty nervous but it went well.",
+    href: "https://drive.google.com/file/d/1idthTPnB3MaKryNb2j0NtA0gbvXy_UKq/view?usp=drive_link",
   },
   {
     id: "levelup-2025",
