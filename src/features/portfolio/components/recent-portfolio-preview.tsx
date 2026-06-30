@@ -127,7 +127,7 @@ function PortfolioPreviewItem({ project }: { project: Project }) {
           </div>
         )}
         {platformBadge(project.href) && (
-          <div className="absolute bottom-1.5 right-1.5 z-20 rounded bg-black/70 p-1">
+          <div className="absolute bottom-1.5 left-1.5 z-20 rounded bg-black/70 p-1">
             <Image src={platformBadge(project.href)!.src} alt={platformBadge(project.href)!.alt} width={14} height={14} className="opacity-90" unoptimized />
           </div>
         )}

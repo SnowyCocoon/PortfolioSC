@@ -63,6 +63,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Low-res retro nature textures mimicking PSX-era aesthetics — optimised for indie game developers.",
     href: "https://www.artstation.com/artwork/K3WQyo",
+    coverImage: "/images/art_portfolio/nature psx 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -75,6 +76,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Free PSX-style foliage pack with trees, bushes, and grass for retro-aesthetic game projects.",
     href: "https://www.artstation.com/artwork/K3WQyo",
+    coverImage: "/images/art_portfolio/Foliage nature psx 32.png",
     tags: [{ label: "Art", category: "Art" }, { label: "3D Modeling", category: "Modeling3D" }],
     date: "2025",
   },
@@ -84,6 +86,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "PSX-style horror cellar texture and prop pack targeting retro low-poly aesthetics.",
     href: "https://www.artstation.com/artwork/L4QvKR",
+    coverImage: "/images/art_portfolio/Cellar 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Art", category: "Art" },
@@ -97,6 +100,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Second volume of procedural camouflage PBR textures — multiple variants built in Substance Designer.",
     href: "https://snowycocoon.itch.io/camouflage-texture-pack-2",
+    coverImage: "/images/art_portfolio/Camo 2 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -109,6 +113,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Python plugin for Substance Designer that batch-exports graphs, speeding up material pipeline workflows.",
     href: "https://www.artstation.com/artwork/Gv3eOW",
+    coverImage: "/images/art_portfolio/Substance Exporter 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -123,6 +128,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Procedural button PBR material made in Substance Designer with configurable shape and wear parameters.",
     href: "https://www.artstation.com/artwork/dy9EQW",
+    coverImage: "/images/art_portfolio/Buttons 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -135,6 +141,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Procedural camouflage PBR textures in Substance Designer — military and woodland variants.",
     href: "https://snowycocoon.itch.io/camouflage-texture-pack-1",
+    coverImage: "/images/art_portfolio/Camo 1 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -147,6 +154,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Procedural PBR fabric material pack created in Substance Designer — game-ready tileable textures.",
     href: "https://www.artstation.com/artwork/6LRJdV",
+    coverImage: "/images/art_portfolio/Ripstop 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -159,6 +167,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Stylised hearts pattern PBR material made procedurally in Substance Designer for game engines.",
     href: "https://snowycocoon.itch.io/hearts-pattern-pbr-fabric-material",
+    coverImage: "/images/art_portfolio/Hearts 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Substance Pack", category: "SubstancePack" },
@@ -192,6 +201,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Custom Unity editor tools for artists — streamlining level design, asset placement, and iteration workflows.",
     href: "https://www.artstation.com/artwork/L4ava0",
+    coverImage: "/images/art_portfolio/Unity Tools 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Unity", category: "Unity" },
@@ -206,6 +216,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Collection of custom shaders for Unity — stylised effects, surface shaders, and post-processing experiments.",
     href: "https://www.artstation.com/artwork/x336e1",
+    coverImage: "/images/art_portfolio/Shaders 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Shaders", category: "Shaders" },
@@ -219,6 +230,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Real-time VFX portal effect in Unity using particle systems, shaders, and distortion to create a magical iris gate.",
     href: "https://www.artstation.com/artwork/8Bb2zx",
+    coverImage: "/images/art_portfolio/Portal 32.png",
     tags: [
       { label: "VFX", category: "VFX" },
       { label: "Technical Art", category: "TechnicalArt" },
@@ -264,6 +276,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Atmospheric urban environment scene crafted in Unreal Engine 5 with advanced lighting and handcrafted details.",
     href: "https://www.artstation.com/artwork/Gey01d",
+    coverImage: "/images/art_portfolio/Night Alley 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Environmental Art", category: "EnvironmentalArt" },
@@ -277,6 +290,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Lush UE5 landscape environment with procedural foliage placement, terrain sculpting, and Nanite assets.",
     href: "https://www.artstation.com/artwork/WBWOov",
+    coverImage: "/images/art_portfolio/Spring Hills 32.png",
     tags: [
       { label: "Technical Art", category: "TechnicalArt" },
       { label: "Environmental Art", category: "EnvironmentalArt" },
