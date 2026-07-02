@@ -38,7 +38,7 @@ const RAW_PROJECTS: Project[] = [
     href: "https://store.steampowered.com/app/3976200/Punch_Lunch_Foodtruck_Fighter",
     coverImage: "/images/tech_portfolio/punchlunch32.png",
     tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }],
-    date: "2025-Present",
+    date: "2025-2026",
   },
   {
     id: "intermission-games",
@@ -195,7 +195,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Panda Platformer, Pandagotchi, Hikari Picker, Hikari JRPG — advergames for the Hikari anime convention.",
     href: "https://hikari.pl/",
-    tags: [{ label: "Data Science", category: "DataScience" }],
+    tags: [{ label: "Unity", category: "Unity", }, { label: "Game Dev", category: "GameDev" }, { label: "Godot", category: "Godot" }],
     date: "2023-2025",
   },
 
