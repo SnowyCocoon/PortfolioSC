@@ -17,6 +17,7 @@ const RAW_PROJECTS: Project[] = [
     title: "Hikari Dressup Game",
     description: "New game in development for the Hikari anime convention. I'm the product owner, and main developer.",
     href: "https://hikari.pl/ubieranka-galeria/",
+    coverImage: "/images/tech_portfolio/hikari32.jpg",
     tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }],
     date: "2026-Present",
   },
@@ -34,6 +35,7 @@ const RAW_PROJECTS: Project[] = [
     description:
       "Fighting game at 3R Games — behavior trees, combat systems, environmental mechanics, and gameplay design in Unity.",
     href: "https://store.steampowered.com/app/3976200/Punch_Lunch_Foodtruck_Fighter",
+    coverImage: "/images/tech_portfolio/punchlunch32.png",
     tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Unity", category: "Unity" }],
     date: "2025-Present",
   },
@@ -47,11 +49,21 @@ const RAW_PROJECTS: Project[] = [
     date: "2024-2026",
   },
   {
+    id: "mobb-inc",
+    title: "mobb_inc.",
+    description: "Game in development at Manic Pixel Dream Games. More info soon!",
+    href: "https://store.steampowered.com/app/4779440/mobb_inc/",
+    coverImage: "/images/tech_portfolio/Mobbinc32.png",
+    tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Godot", category: "Godot" }],
+    date: "2025-Present (still helping with the project)",
+  },
+  {
     id: "hikari-data-analysis",
     title: "Hikari Convention Data Analysis",
     description:
       "Analysing ticket sales, social media data, questionnaires, and competitor research to improve the Hikari convention.",
     href: "https://hikari.pl/",
+    coverImage: "/images/tech_portfolio/hikari32.jpg",
     tags: [{ label: "Data Science", category: "DataScience" }],
     date: "2023-Present",
   },
@@ -173,14 +185,6 @@ const RAW_PROJECTS: Project[] = [
       { label: "Substance Pack", category: "SubstancePack" },
     ],
     date: "2025",
-  },
-  {
-    id: "mobb-inc",
-    title: "mobb_inc.",
-    description: "Game in development at Manic Pixel Dream Games. More info soon!",
-    href: "https://store.steampowered.com/app/4779440/mobb_inc/",
-    tags: [{ label: "Game Dev", category: "GameDev" }, { label: "Godot", category: "Godot" }],
-    date: "2025-Present (still helping with the project)",
   },
 
   // ── 2023–2025 ─────────────────────────────────────────────────────────────
