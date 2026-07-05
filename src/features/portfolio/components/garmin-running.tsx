@@ -10,15 +10,17 @@ import {
 } from "../lib/running-stats";
 import { MonthTabs } from "./garmin-month-tabs";
 
-const KCAL_PER_PIZZA_SLICE = 285;
+// New training chapter starts here — no data before this date is shown.
+const CHAPTER_START = "2026-06-01";
+
+function todayISODate(): string {
+  return new Date().toISOString().slice(0, 10);
+}
 
 export async function GarminRunning() {
-  const activities = await fetchRunningActivities();
+  const activities = await fetchRunningActivities(CHAPTER_START, todayISODate());
   const allTimeBests = computeBests(activities);
   const months = buildMonthlySummaries(activities);
-  const pizzaSlices = Math.round(
-    activities.reduce((sum, a) => sum + a.calories, 0) / KCAL_PER_PIZZA_SLICE,
-  );
 
   return (
     <Panel>
@@ -39,17 +41,11 @@ export async function GarminRunning() {
             <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
               Personal Bests
             </h3>
-            <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
               {DISTANCE_TARGETS.map((target) => (
                 <DistanceCard key={target.key} target={target} bestSeconds={allTimeBests[target.key]} />
               ))}
             </div>
-
-            {pizzaSlices > 0 && (
-              <p className="mb-5 font-mono text-xs text-muted-foreground">
-                🍕 Lifetime calories burned running ≈ {pizzaSlices.toLocaleString()} slices of pizza.
-              </p>
-            )}
 
             {months.length > 0 && <MonthTabs months={months} distances={DISTANCE_TARGETS} />}
           </>

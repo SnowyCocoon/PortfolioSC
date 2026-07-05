@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { formatDuration, type DistanceTarget, type MonthSummary } from "../lib/running-stats";
 
 export function MonthTabs({
@@ -42,8 +43,10 @@ export function MonthTabs({
           {distances.map((d) => (
             <div key={d.key} className="rounded-md border border-line px-3 py-2">
               <span className="font-mono text-[11px] text-muted-foreground">{d.label}</span>
-              <div className="mt-1 font-mono text-sm font-bold tabular-nums">
+              <div className="mt-1 flex items-center gap-1 font-mono text-sm font-bold tabular-nums">
                 {month.bests[d.key] != null ? formatDuration(month.bests[d.key]!) : "—"}
+                {month.trend[d.key] === "down" && <ArrowDown className="size-3 shrink-0 text-emerald-500" />}
+                {month.trend[d.key] === "up" && <ArrowUp className="size-3 shrink-0 text-red-500" />}
               </div>
             </div>
           ))}
