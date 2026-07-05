@@ -21,6 +21,34 @@ export const DISTANCE_TARGETS: DistanceTarget[] = [
   { key: "half-marathon", label: "Half Marathon", meters: 21097.5, goalSeconds: null },
 ];
 
+// Confirmed lifetime PBs (verified by hand against Garmin's own Best Efforts
+// widget). Our activity-stream approximation doesn't always land exactly on
+// these, so we use them as a floor and only let a freshly computed time win
+// if it's genuinely faster — meaning a new PB was actually run.
+export const BASELINE_BESTS: Record<string, number> = {
+  "400m": 83, // 1:23
+  "half-mile": 180, // 3:00
+  "1k": 228, // 3:48
+  mile: 449, // 7:29
+  "2mile": 929, // 15:29
+  "5k": 1465, // 24:25
+  "10k": 3206, // 53:26
+  "15k": 4895, // 1:21:35
+  "10mile": 5263, // 1:27:43
+  "20k": 6641, // 1:50:41
+  "half-marathon": 7045, // 1:57:25
+};
+
+export function withBaseline(computed: Record<string, number | null>): Record<string, number | null> {
+  const merged: Record<string, number | null> = { ...computed };
+  for (const key of Object.keys(BASELINE_BESTS)) {
+    const baseline = BASELINE_BESTS[key];
+    const current = merged[key];
+    merged[key] = current != null && current < baseline ? current : baseline;
+  }
+  return merged;
+}
+
 export type Trend = "up" | "down" | "same" | null;
 
 export interface MonthSummary {

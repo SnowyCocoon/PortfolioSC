@@ -6,6 +6,7 @@ import {
   computeBests,
   buildMonthlySummaries,
   formatDuration,
+  withBaseline,
   type DistanceTarget,
 } from "../lib/running-stats";
 import { MonthTabs } from "./garmin-month-tabs";
@@ -22,7 +23,7 @@ function todayISODate(): string {
 
 export async function GarminRunning() {
   const activities = await fetchRunningActivities(ALL_TIME_START, todayISODate());
-  const allTimeBests = computeBests(activities);
+  const allTimeBests = withBaseline(computeBests(activities));
   const months = buildMonthlySummaries(activities.filter((a) => a.startTimeLocal >= CHAPTER_START));
 
   return (
