@@ -145,14 +145,14 @@ export function ProjectItem({ project }: { project: Project }) {
 
   const inner = (
     <>
-      {/* Desktop: large thumbnail */}
-      <div className="relative hidden h-24 w-36 shrink-0 overflow-hidden rounded-md border border-line sm:block">
+      {/* Big thumbnail: full-width on mobile, fixed box on desktop */}
+      <div className="relative aspect-[3/2] w-full shrink-0 overflow-hidden rounded-md border border-line sm:w-36">
         {project.coverImage ? (
-          <Image src={project.coverImage} alt={project.title} fill sizes="144px" className="object-cover" unoptimized />
+          <Image src={project.coverImage} alt={project.title} fill sizes="(min-width: 640px) 144px, 100vw" className="object-cover" unoptimized />
         ) : (
           <div className={`relative flex h-full w-full items-center justify-center ${bgCls}`}>
             <div className="absolute inset-0 bg-[repeating-linear-gradient(315deg,var(--color-line)_0,var(--color-line)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] opacity-30" />
-            <IconComponent className="relative z-10 size-7" />
+            <IconComponent className="relative z-10 size-10 sm:size-7" />
           </div>
         )}
         {platformBadge(project.href) && (
@@ -161,14 +161,10 @@ export function ProjectItem({ project }: { project: Project }) {
           </div>
         )}
       </div>
-      {/* Mobile: small icon */}
-      <div className={`flex size-9 shrink-0 items-center justify-center rounded-lg border border-line sm:hidden ${bgCls}`}>
-        <IconComponent className="size-4" />
-      </div>
 
       <div className="min-w-0 flex-1">
         <h3 className="font-mono text-sm font-bold">{project.title}</h3>
-        <p className="mt-0.5 line-clamp-2 font-mono text-xs text-muted-foreground">{project.description}</p>
+        <p className="mt-0.5 hidden line-clamp-2 font-mono text-xs text-muted-foreground sm:block">{project.description}</p>
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <span className="font-mono text-xs text-muted-foreground">{project.date}</span>
           {project.tags.slice(0, 5).map((tag) => (
@@ -180,14 +176,14 @@ export function ProjectItem({ project }: { project: Project }) {
       </div>
 
       {project.href ? (
-        <ArrowUpRight className="size-4 shrink-0 self-center text-muted-foreground transition-colors group-hover:text-foreground" />
+        <ArrowUpRight className="hidden size-4 shrink-0 self-center text-muted-foreground transition-colors group-hover:text-foreground sm:block" />
       ) : (
-        <X className="size-4 shrink-0 self-center text-muted-foreground/25" />
+        <X className="hidden size-4 shrink-0 self-center text-muted-foreground/25 sm:block" />
       )}
     </>
   );
 
-  const cls = "group flex gap-4 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60";
+  const cls = "group flex flex-col gap-3 border-b border-line px-4 py-3 last:border-b-0 transition-colors hover:bg-accent/60 sm:flex-row sm:items-start sm:gap-4";
   if (project.href) {
     return <a href={project.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>;
   }

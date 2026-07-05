@@ -22,17 +22,17 @@ export function BlogPreview() {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="group flex gap-4 border-b border-line px-4 py-4 transition-colors hover:bg-accent last:border-b-0"
+            className="group flex flex-col gap-3 border-b border-line px-4 py-4 transition-colors hover:bg-accent last:border-b-0 sm:flex-row sm:items-start sm:gap-4"
           >
             {/* Cover image thumbnail */}
-            <div className="relative hidden h-20 w-28 shrink-0 overflow-hidden rounded-md border border-line sm:block">
+            <div className="relative aspect-[3/2] w-full shrink-0 overflow-hidden rounded-md border border-line sm:w-28">
               {post.coverImage ? (
                 <Image
                   src={post.coverImage}
                   alt={post.title}
                   fill
                   className="object-cover"
-                  sizes="112px"
+                  sizes="(min-width: 640px) 112px, 100vw"
                   unoptimized
                 />
               ) : (
@@ -80,7 +80,7 @@ export function BlogPreview() {
               </div>
             </div>
 
-            <ArrowUpRight className="size-4 shrink-0 self-start text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+            <ArrowUpRight className="hidden size-4 shrink-0 self-start text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 sm:block" />
           </Link>
         ))}
       </div>
