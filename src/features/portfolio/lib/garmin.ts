@@ -16,6 +16,7 @@ export interface RunActivity {
   distanceMeters: number;
   durationSeconds: number;
   calories: number;
+  isTreadmill: boolean;
   /** Fine-grained distance/time deltas (from Garmin's per-second stream where available); used to derive best-effort times within a longer run. */
   laps: RunLap[];
 }
@@ -162,6 +163,7 @@ export async function fetchRunningActivities(startDate: string, endDate: string)
     distanceMeters: a.distance ?? 0,
     durationSeconds: a.duration ?? 0,
     calories: a.calories ?? 0,
+    isTreadmill: a.activityType?.typeKey === "treadmill_running",
     laps: lapsByActivity[i],
   }));
 }

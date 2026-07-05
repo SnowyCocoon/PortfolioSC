@@ -1,4 +1,4 @@
-import { Activity, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
+import { Activity, ArrowRight, CheckCircle2, House, XCircle } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle, PanelContent } from "./panel";
 import { fetchRunningActivities } from "../lib/garmin";
 import {
@@ -23,7 +23,8 @@ function todayISODate(): string {
 
 export async function GarminRunning() {
   const activities = await fetchRunningActivities(ALL_TIME_START, todayISODate());
-  const allTimeBests = withBaseline(computeBests(activities));
+  const outdoorBests = withBaseline(computeBests(activities.filter((a) => !a.isTreadmill)));
+  const treadmillBests = computeBests(activities.filter((a) => a.isTreadmill));
   const months = buildMonthlySummaries(activities.filter((a) => a.startTimeLocal >= CHAPTER_START));
 
   return (
@@ -47,7 +48,12 @@ export async function GarminRunning() {
             </h3>
             <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
               {DISTANCE_TARGETS.map((target) => (
-                <DistanceCard key={target.key} target={target} bestSeconds={allTimeBests[target.key]} />
+                <DistanceCard
+                  key={target.key}
+                  target={target}
+                  bestSeconds={outdoorBests[target.key]}
+                  treadmillSeconds={treadmillBests[target.key]}
+                />
               ))}
             </div>
 
@@ -62,12 +68,16 @@ export async function GarminRunning() {
 function DistanceCard({
   target,
   bestSeconds,
+  treadmillSeconds,
 }: {
   target: DistanceTarget;
   bestSeconds: number | null;
+  treadmillSeconds: number | null;
 }) {
   const hasGoal = target.goalSeconds != null;
   const passed = hasGoal && bestSeconds != null && bestSeconds <= target.goalSeconds!;
+  const treadmillIsFaster =
+    treadmillSeconds != null && (bestSeconds == null || treadmillSeconds < bestSeconds);
 
   return (
     <div className="rounded-md border border-line px-3 py-2">
@@ -83,6 +93,11 @@ function DistanceCard({
       <div className="mt-1 font-mono text-lg font-bold tabular-nums">
         {bestSeconds != null ? formatDuration(bestSeconds) : "—"}
       </div>
+      {treadmillIsFaster && (
+        <div className="mt-0.5 flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
+          <House className="size-2.5 shrink-0" />({formatDuration(treadmillSeconds!)} on treadmill)
+        </div>
+      )}
       {hasGoal && (
         <div className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           Goal <ArrowRight className="size-2.5" /> {formatDuration(target.goalSeconds!)}
