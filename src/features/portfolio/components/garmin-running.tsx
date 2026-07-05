@@ -10,7 +10,10 @@ import {
 } from "../lib/running-stats";
 import { MonthTabs } from "./garmin-month-tabs";
 
-// New training chapter starts here — no data before this date is shown.
+// Personal bests look back to the start of 2024. The monthly breakdown below
+// only shows June 2026 onward — a new training chapter — but the all-time
+// records at the top aren't scoped to that cutoff.
+const ALL_TIME_START = "2024-01-01";
 const CHAPTER_START = "2026-06-01";
 
 function todayISODate(): string {
@@ -18,9 +21,9 @@ function todayISODate(): string {
 }
 
 export async function GarminRunning() {
-  const activities = await fetchRunningActivities(CHAPTER_START, todayISODate());
+  const activities = await fetchRunningActivities(ALL_TIME_START, todayISODate());
   const allTimeBests = computeBests(activities);
-  const months = buildMonthlySummaries(activities);
+  const months = buildMonthlySummaries(activities.filter((a) => a.startTimeLocal >= CHAPTER_START));
 
   return (
     <Panel>
