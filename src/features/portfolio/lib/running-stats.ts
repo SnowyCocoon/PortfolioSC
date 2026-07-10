@@ -163,5 +163,7 @@ export function buildMonthlySummaries(activities: RunActivity[]): MonthSummary[]
     prevBests = bests;
   }
 
-  return summaries;
+  // Trend is computed chronologically (above), but the most recent month
+  // should be the first tab shown.
+  return summaries.reverse();
 }
