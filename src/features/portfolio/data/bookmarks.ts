@@ -9,4 +9,12 @@ export const BOOKMARKS: Bookmark[] = [
     date: "2026",
     iconSlug: "anthropic",
   },
+  {
+    id: "unity-design-patterns",
+    title: "Unity Design Patterns",
+    description: "Reference catalog of common software design patterns implemented in Unity/C#.",
+    href: "https://www.unitydesignpatterns.com/",
+    date: "2026",
+    iconSlug: "unity",
+  },
 ];

@@ -37,7 +37,13 @@ const RECENT_ITEMS = [
   { name: "Colossal blade",   imgWiki: "Colossal_blade.png" },
   { name: "Zombie axe",       imgWiki: "Zombie_axe.png" },
   { name: "Glacial temotli",  imgWiki: "Glacial_temotli.png" },
+  { name: "Hunters' sunlight crossbow", imgWiki: "Hunters'_sunlight_crossbow.png" },
 ];
+
+// Index of "Collections Logged" in the hiscore_oldschool_ironman CSV response
+// (25 skill lines including Sailing, then 19 activity lines before bosses —
+// verified empirically against the live API).
+const COLLECTION_LOG_INDEX = 44;
 
 type SkillRow = { rank: number; level: number; xp: number };
 
@@ -52,7 +58,7 @@ async function fetchStats(): Promise<SkillRow[] | null> {
     return text
       .trim()
       .split("\n")
-      .slice(0, 25)
+      .slice(0, COLLECTION_LOG_INDEX + 1)
       .map((line) => {
         const [rank, level, xp] = line.split(",").map(Number);
         return { rank, level, xp };
@@ -107,6 +113,7 @@ export async function OsrsStats() {
               <StatBox label="Total Level" value={skills[0].level.toLocaleString()} accent />
               <StatBox label="Combat" value={String(calcCombat(skills))} accent />
               <StatBox label="Ironman Rank" value={`#${skills[0].rank.toLocaleString()}`} />
+              <StatBox label="Collection Log" value={String(skills[COLLECTION_LOG_INDEX].level)} />
             </div>
 
             {/* Skill grid — all 23 skills, same order as the API */}

@@ -2,6 +2,15 @@ import type { Certification } from "../types";
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    id: "technical-artist-career-overview",
+    title: "Technical Artist Career overview - From Skills to Interviews.",
+    issuer: "Udemy",
+    date: "07.2026",
+    certId: "UC-670d60c2-375a-4839-bb6c-6553f8eddfa9",
+    href: "https://www.udemy.com/certificate/UC-670d60c2-375a-4839-bb6c-6553f8eddfa9/",
+    iconSlug: "udemy",
+  },
+  {
     id: "ai-agents-fundamentals",
     title: "AI Agents Fundamentals",
     issuer: "Hugging Face",
