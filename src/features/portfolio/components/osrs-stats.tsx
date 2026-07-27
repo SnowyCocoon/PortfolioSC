@@ -121,13 +121,16 @@ export async function OsrsStats() {
               {API_SKILLS.map((skill, i) => {
                 const row = skills[i + 1];
                 const isDefence = skill.name === "Defence";
+                const isMaxed = row.level >= 99;
                 return (
                   <div
                     key={skill.name}
-                    title={skill.name}
+                    title={isMaxed ? `${skill.name} (99 — maxed)` : skill.name}
                     className={`relative flex items-center gap-1.5 rounded border px-2 py-1.5 ${
                       isDefence
                         ? "border-line/40 bg-muted/20"
+                        : isMaxed
+                        ? "border-amber-400/60 bg-amber-400/10 dark:border-amber-400/40 dark:bg-amber-400/10"
                         : "border-line"
                     }`}
                   >
@@ -139,7 +142,7 @@ export async function OsrsStats() {
                       unoptimized
                       className={`shrink-0 ${isDefence ? "opacity-40" : ""}`}
                     />
-                    <span className={`font-mono text-xs font-bold tabular-nums ${isDefence ? "text-muted-foreground/50" : ""}`}>
+                    <span className={`font-mono text-xs font-bold tabular-nums ${isDefence ? "text-muted-foreground/50" : isMaxed ? "text-amber-500 dark:text-amber-400" : ""}`}>
                       {row.level}
                     </span>
                     {isDefence && (

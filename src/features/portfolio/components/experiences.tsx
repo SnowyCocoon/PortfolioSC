@@ -2,15 +2,20 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import {
   Panel,
   PanelHeader,
   PanelTitle,
 } from "./panel";
+import { Button } from "@/components/ui/button";
 import { EXPERIENCES } from "../data/experiences";
 import { type Experience, getSkillColor } from "../types";
 
+const VISIBLE_COUNT = 4;
+
 const COMPANY_STYLES: Record<string, { bg: string; text: string; initials: string }> = {
+  "inlet-pipe-productions": { bg: "bg-cyan-600",  text: "text-white", initials: "IP" },
   "3r-games":     { bg: "bg-red-500",    text: "text-white", initials: "3R" },
   "manic-pixel":  { bg: "bg-purple-500", text: "text-white", initials: "MP" },
   "knoocker":     { bg: "bg-blue-500",   text: "text-white", initials: "K"  },
@@ -47,16 +52,27 @@ function CompanyLogo({ experience }: { experience: Experience }) {
 }
 
 export function Experiences() {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? EXPERIENCES : EXPERIENCES.slice(0, VISIBLE_COUNT);
+
   return (
     <Panel>
       <PanelHeader>
         <PanelTitle>Experience</PanelTitle>
       </PanelHeader>
       <div>
-        {EXPERIENCES.map((exp) => (
+        {visible.map((exp) => (
           <ExperienceItem key={exp.id} experience={exp} />
         ))}
       </div>
+      {EXPERIENCES.length > VISIBLE_COUNT && (
+        <div className="flex justify-center border-t border-line py-2">
+          <Button variant="ghost" size="sm" onClick={() => setExpanded(!expanded)} className="font-mono text-xs">
+            {expanded ? "Show Less" : `Show More (${EXPERIENCES.length - VISIBLE_COUNT} more)`}
+            <ChevronDown className={`ml-1 size-3 transition-transform ${expanded ? "rotate-180" : ""}`} />
+          </Button>
+        </div>
+      )}
     </Panel>
   );
 }

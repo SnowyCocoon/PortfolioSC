@@ -2,6 +2,24 @@ import type { Experience } from "../types";
 
 export const EXPERIENCES: Experience[] = [
   {
+    id: "inlet-pipe-productions",
+    companyName: "Inlet Pipe Productions",
+    companyWebsite: "https://inlet-pipe-productions.itch.io/",
+    positions: [
+      {
+        title: "Senior Godot Developer",
+        employmentType: "Full-time",
+        startDate: "07.2026",
+        endDate: "Present",
+        description: [
+          "Studio pages: itch.io (inlet-pipe-productions.itch.io) and Steam publisher (store.steampowered.com/publisher/ipprods)",
+        ],
+        skills: ["Godot", "GDScript"],
+      },
+    ],
+    location: "Remote",
+  },
+  {
     id: "snowy-cocoon",
     companyName: "SnowyCocoon (Personal Brand)",
     companyWebsite: "https://snowycocoon.com/",
@@ -22,28 +40,6 @@ export const EXPERIENCES: Experience[] = [
       },
     ],
     location: "Poznan, Poland, Remote",
-  },
-  {
-  id: "sidestream-games",
-    companyName: "Sidestream Games",
-    companyWebsite: "https://sidestream.games/",
-    logo: "/images/companies/sidestream_logo.png",
-    positions: [
-      {
-        title: "Co-founder, Godot Developer",
-        employmentType: "Self-employed",
-        startDate: "02.2024",
-        endDate: "Present",
-        description: [
-          "Creating advergames for clients from the marketing and streaming industry, like InStreamly and PepsiCo",
-          "Creating our own projects and MVPs, that will land on Steam soon",
-          "Working in Godot Engine",
-          "Working with Twitch Extensions and Twitch API",
-        ],
-        skills: ["Godot", "GDScript", "AI", "Twitch API"],
-      },
-    ],
-    location: "Warsaw, Poland, Remote",
   },
   {
     id: "hikari",
@@ -134,6 +130,28 @@ export const EXPERIENCES: Experience[] = [
       },
     ],
     location: "Poznan, Poland, Hybrid",
+  },
+  {
+    id: "sidestream-games",
+    companyName: "Sidestream Games",
+    companyWebsite: "https://sidestream.games/",
+    logo: "/images/companies/sidestream_logo.png",
+    positions: [
+      {
+        title: "Co-founder, Godot Developer",
+        employmentType: "Self-employed",
+        startDate: "02.2024",
+        endDate: "06.2026",
+        description: [
+          "Creating advergames for clients from the marketing and streaming industry, like InStreamly and PepsiCo",
+          "Creating our own projects and MVPs, that will land on Steam soon",
+          "Working in Godot Engine",
+          "Working with Twitch Extensions and Twitch API",
+        ],
+        skills: ["Godot", "GDScript", "AI", "Twitch API"],
+      },
+    ],
+    location: "Warsaw, Poland, Remote",
   },
   {
     id: "microtaur",
