@@ -5,7 +5,7 @@ export const USER: User = {
   username: "snowycocoon",
   jobTitle: "Game Developer | Technical Artist | AI Engineer",
   currentJobs: [
-    { company: "sidestream.games", title: "Godot Developer", href: "https://sidestream.games/" },
+    { company: "Inlet Pipe Productions", title: "Godot Dev", href: "https://store.steampowered.com/publisher/ipprods" },
     { company: "Hikari", title: "Event Organizer", href: "https://hikari.pl/" },
   ],
   volunteerRole: "Event Organizer @Hikari",

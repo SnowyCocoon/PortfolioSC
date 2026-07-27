@@ -5,6 +5,7 @@ export const EXPERIENCES: Experience[] = [
     id: "inlet-pipe-productions",
     companyName: "Inlet Pipe Productions",
     companyWebsite: "https://inlet-pipe-productions.itch.io/",
+    logo: "/images/companies/ipp_logo.jpg",
     positions: [
       {
         title: "Senior Godot Developer",
@@ -12,12 +13,14 @@ export const EXPERIENCES: Experience[] = [
         startDate: "07.2026",
         endDate: "Present",
         description: [
-          "Studio pages: itch.io (inlet-pipe-productions.itch.io) and Steam publisher (store.steampowered.com/publisher/ipprods)",
+          "Developing new unannounced game project in Godot Engine",
+          "being responsible for the technical side of the project, including programming, architecture, shaders, and optimization",
+          "more details will be revealed soon",
         ],
-        skills: ["Godot", "GDScript"],
+        skills: ["Godot", "GDScript", "Shaders", "Game Architecture", "Optimization"],
       },
     ],
-    location: "Remote",
+    location: "Poland, Remote",
   },
   {
     id: "snowy-cocoon",
