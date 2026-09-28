@@ -7,18 +7,21 @@ export interface DistanceTarget {
   goalSeconds: number | null;
 }
 
+// Long-distance goals are paced off a 1:45:00 half marathon (~4:59/km),
+// rounded to clean splits: 15k 1:15:00, 10mi 1:20:00, 20k 1:40:00.
 export const DISTANCE_TARGETS: DistanceTarget[] = [
+  { key: "100m", label: "100 m", meters: 100, goalSeconds: 15 },
   { key: "400m", label: "400 m", meters: 400, goalSeconds: 60 },
   { key: "half-mile", label: "1/2 Mile", meters: 804.672, goalSeconds: 150 },
   { key: "1k", label: "1 km", meters: 1000, goalSeconds: 210 },
   { key: "mile", label: "1 Mile", meters: 1609.344, goalSeconds: 360 },
   { key: "2mile", label: "2 Miles", meters: 3218.688, goalSeconds: 750 },
-  { key: "5k", label: "5 km", meters: 5000, goalSeconds: 1320 },
-  { key: "10k", label: "10 km", meters: 10000, goalSeconds: 2940 },
-  { key: "15k", label: "15 km", meters: 15000, goalSeconds: null },
-  { key: "10mile", label: "10 Miles", meters: 16093.44, goalSeconds: null },
-  { key: "20k", label: "20 km", meters: 20000, goalSeconds: null },
-  { key: "half-marathon", label: "Half Marathon", meters: 21097.5, goalSeconds: null },
+  { key: "5k", label: "5 km", meters: 5000, goalSeconds: 1350 },
+  { key: "10k", label: "10 km", meters: 10000, goalSeconds: 3000 },
+  { key: "15k", label: "15 km", meters: 15000, goalSeconds: 4500 },
+  { key: "10mile", label: "10 Miles", meters: 16093.44, goalSeconds: 4800 },
+  { key: "20k", label: "20 km", meters: 20000, goalSeconds: 6000 },
+  { key: "half-marathon", label: "Half Marathon", meters: 21097.5, goalSeconds: 6300 },
 ];
 
 // Confirmed lifetime PBs (verified by hand against Garmin's own Best Efforts
@@ -26,7 +29,7 @@ export const DISTANCE_TARGETS: DistanceTarget[] = [
 // these, so we use them as a floor and only let a freshly computed time win
 // if it's genuinely faster — meaning a new PB was actually run.
 export const BASELINE_BESTS: Record<string, number> = {
-  "400m": 83, // 1:23
+  "400m": 78, // 1:18 — Poznań, 2 Sep 2026
   "half-mile": 180, // 3:00
   "1k": 228, // 3:48
   mile: 449, // 7:29
@@ -49,19 +52,6 @@ export function withBaseline(computed: Record<string, number | null>): Record<st
   return merged;
 }
 
-export type Trend = "up" | "down" | "same" | null;
-
-export interface MonthSummary {
-  key: string;
-  label: string;
-  runCount: number;
-  totalDistanceKm: number;
-  totalDurationSeconds: number;
-  bests: Record<string, number | null>;
-  /** vs the previous month in the list — "down" means faster/improved */
-  trend: Record<string, Trend>;
-}
-
 export function formatDuration(totalSeconds: number): string {
   const s = Math.round(totalSeconds);
   const h = Math.floor(s / 3600);
@@ -69,6 +59,13 @@ export function formatDuration(totalSeconds: number): string {
   const sec = s % 60;
   if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
   return `${m}:${String(sec).padStart(2, "0")}`;
+}
+
+// Sprint distances are shown as seconds.milliseconds (e.g. 14.382s) — minute
+// formatting would hide the difference between attempts.
+export function formatTargetTime(target: DistanceTarget, totalSeconds: number): string {
+  if (target.meters < 400) return `${totalSeconds.toFixed(3)}s`;
+  return formatDuration(totalSeconds);
 }
 
 // Finds the fastest time to cover `targetMeters` using any contiguous window of
@@ -119,51 +116,4 @@ export function computeBests(activities: RunActivity[]): Record<string, number |
     bests[target.key] = best;
   }
   return bests;
-}
-
-export function buildMonthlySummaries(activities: RunActivity[]): MonthSummary[] {
-  const byMonth = new Map<string, RunActivity[]>();
-  for (const a of activities) {
-    const key = a.startTimeLocal.slice(0, 7); // "2026-06"
-    if (!byMonth.has(key)) byMonth.set(key, []);
-    byMonth.get(key)!.push(a);
-  }
-
-  const sortedKeys = Array.from(byMonth.keys()).sort(); // ascending chronological
-
-  const summaries: MonthSummary[] = [];
-  let prevBests: Record<string, number | null> | null = null;
-
-  for (const key of sortedKeys) {
-    const monthActivities = byMonth.get(key)!;
-    const [year, month] = key.split("-").map(Number);
-    const label = new Date(year, month - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
-    const bests = computeBests(monthActivities);
-
-    const trend: Record<string, Trend> = {};
-    for (const target of DISTANCE_TARGETS) {
-      const cur = bests[target.key];
-      const prev = prevBests ? prevBests[target.key] : null;
-      if (cur == null || prev == null) trend[target.key] = null;
-      else if (cur < prev) trend[target.key] = "down";
-      else if (cur > prev) trend[target.key] = "up";
-      else trend[target.key] = "same";
-    }
-
-    summaries.push({
-      key,
-      label,
-      runCount: monthActivities.length,
-      totalDistanceKm: monthActivities.reduce((sum, a) => sum + a.distanceMeters, 0) / 1000,
-      totalDurationSeconds: monthActivities.reduce((sum, a) => sum + a.durationSeconds, 0),
-      bests,
-      trend,
-    });
-
-    prevBests = bests;
-  }
-
-  // Trend is computed chronologically (above), but the most recent month
-  // should be the first tab shown.
-  return summaries.reverse();
 }

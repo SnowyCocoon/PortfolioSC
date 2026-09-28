@@ -33,7 +33,14 @@ const API_SKILLS = [
 ] as const;
 
 // Update imgWiki with the exact filename used on the OSRS Wiki (spaces → underscores)
+// Newest first — the list scrolls after the first 3.
 const RECENT_ITEMS = [
+  { name: "Ancient chaps",      imgWiki: "Ancient_chaps.png" },
+  { name: "Rock golem (pet)",   imgWiki: "Rock_golem.png" },
+  { name: "Slayer helmet",      imgWiki: "Slayer_helmet.png" },
+  { name: "Arclight",           imgWiki: "Arclight.png" },
+  { name: "Imbued Guthix cape", imgWiki: "Imbued_Guthix_cape.png" },
+  { name: "Amulet of glory",    imgWiki: "Amulet_of_glory.png" },
   { name: "Colossal blade",   imgWiki: "Colossal_blade.png" },
   { name: "Zombie axe",       imgWiki: "Zombie_axe.png" },
   { name: "Glacial temotli",  imgWiki: "Glacial_temotli.png" },
@@ -167,7 +174,8 @@ export async function OsrsStats() {
             Recent Notable Drops
           </h3>
         </div>
-        <div>
+        {/* Each row is 61px (36px icon + 24px padding + 1px border) — cap at 3 visible */}
+        <div className="max-h-[183px] overflow-y-auto overscroll-contain">
           {RECENT_ITEMS.map((item) => (
             <div
               key={item.name}

@@ -35,7 +35,7 @@ export default function HomePage() {
           { title: "Stack: Game Development", items: TECH_STACK_GAMEDEV },
           { title: "Stack: Technical Art",    items: TECH_STACK_TECHART },
           { title: "Stack: AI / ML",          items: TECH_STACK_AI },
-          { title: "Stack: Fullstack",        items: TECH_STACK_FULLSTACK },
+          { title: "Stack: Miscellaneous",   items: TECH_STACK_FULLSTACK },
         ]}
       />
       <ScreenLine />

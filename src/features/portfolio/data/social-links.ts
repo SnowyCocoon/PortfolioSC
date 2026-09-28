@@ -17,7 +17,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     title: "Discord",
     subtitle: "snowycocoon",
-    href: "https://discord.gg/4CWbFAaNaN",
+    href: "https://discordapp.com/users/221351971674783754",
     icon: "discord",
   },
   {

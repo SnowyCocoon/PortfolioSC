@@ -1,16 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { formatDuration, type DistanceTarget, type MonthSummary } from "../lib/running-stats";
+import { formatHours, type MonthVolume } from "../lib/training-volume";
 
-export function MonthTabs({
-  months,
-  distances,
-}: {
-  months: MonthSummary[];
-  distances: DistanceTarget[];
-}) {
+export function MonthTabs({ months }: { months: MonthVolume[] }) {
   const [active, setActive] = useState(0);
   const month = months[active];
 
@@ -34,22 +27,34 @@ export function MonthTabs({
 
       <div className="mt-4">
         <div className="mb-4 grid grid-cols-3 gap-2">
-          <MiniStat label="Runs" value={String(month.runCount)} />
-          <MiniStat label="Volume" value={`${month.totalDistanceKm.toFixed(1)} km`} />
-          <MiniStat label="Time" value={formatDuration(month.totalDurationSeconds)} />
+          <MiniStat label="Trainings" value={String(month.sessions)} />
+          <MiniStat label="Time" value={formatHours(month.durationSeconds)} />
+          <MiniStat label="Distance" value={`${month.distanceKm.toFixed(1)} km`} />
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-          {distances.map((d) => (
-            <div key={d.key} className="rounded-md border border-line px-3 py-2">
-              <span className="font-mono text-[11px] text-muted-foreground">{d.label}</span>
-              <div className="mt-1 flex items-center gap-1 font-mono text-sm font-bold tabular-nums">
-                {month.bests[d.key] != null ? formatDuration(month.bests[d.key]!) : "—"}
-                {month.trend[d.key] === "down" && <ArrowDown className="size-3 shrink-0 text-emerald-500" />}
-                {month.trend[d.key] === "up" && <ArrowUp className="size-3 shrink-0 text-red-500" />}
-              </div>
-            </div>
-          ))}
+        <div className="overflow-hidden rounded-md border border-line">
+          <table className="w-full font-mono text-xs tabular-nums">
+            <thead>
+              <tr className="border-b border-line text-left text-[10px] uppercase tracking-widest text-muted-foreground">
+                <th className="px-3 py-1.5 font-normal">Sport</th>
+                <th className="px-3 py-1.5 text-right font-normal">Sessions</th>
+                <th className="px-3 py-1.5 text-right font-normal">Time</th>
+                <th className="px-3 py-1.5 text-right font-normal">Distance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {month.bySport.map((s) => (
+                <tr key={s.category} className="border-b border-line last:border-b-0">
+                  <td className="px-3 py-1.5">{s.label}</td>
+                  <td className="px-3 py-1.5 text-right">{s.sessions}</td>
+                  <td className="px-3 py-1.5 text-right">{formatHours(s.durationSeconds)}</td>
+                  <td className="px-3 py-1.5 text-right">
+                    {s.distanceKm > 0 ? `${s.distanceKm.toFixed(1)} km` : "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

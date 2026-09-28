@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_INFO.url,                          lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${SITE_INFO.url}/blog`,                lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_INFO.url}/projects`,            lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_INFO.url}/tech-portfolio`,      lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_INFO.url}/art-portfolio`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_INFO.url}/research`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_INFO.url}/hobby`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },

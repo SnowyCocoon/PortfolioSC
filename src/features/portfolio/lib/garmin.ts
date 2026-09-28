@@ -45,6 +45,8 @@ async function getAccessToken(): Promise<string | null> {
   }
 }
 
+const MAX_PLAUSIBLE_SPEED = 10; // m/s
+
 interface MetricDescriptor {
   metricsIndex: number;
   key: string;
@@ -54,11 +56,11 @@ interface MetricDescriptor {
 // (roughly 1 point/sec, downsampled to maxChartSize) with cumulative distance
 // and absolute timestamp. Converting consecutive points into distance/time
 // deltas gives much finer resolution than 1km auto-laps for short efforts
-// like 400m, without needing to parse the full FIT binary.
+// like 100m/400m, without needing to parse the full FIT binary.
 async function fetchActivityStream(activityId: number, token: string): Promise<RunLap[]> {
   try {
     const res = await fetch(
-      `${CONNECT_API}/activity-service/activity/${activityId}/details?maxChartSize=500&maxPolylineSize=1`,
+      `${CONNECT_API}/activity-service/activity/${activityId}/details?maxChartSize=2000&maxPolylineSize=1`,
       { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT }, next: { revalidate: 86400 } },
     );
     if (!res.ok) return [];
@@ -84,7 +86,8 @@ async function fetchActivityStream(activityId: number, token: string): Promise<R
     for (let i = 1; i < points.length; i++) {
       const dd = points[i].d - points[i - 1].d;
       const dt = points[i].t - points[i - 1].t;
-      if (dd >= 0 && dt > 0) laps.push({ distanceMeters: dd, durationSeconds: dt });
+      // Drop GPS spikes: anything faster than 10 m/s (sub-10s 100m) isn't a real stride.
+      if (dd >= 0 && dt > 0 && dd / dt <= MAX_PLAUSIBLE_SPEED) laps.push({ distanceMeters: dd, durationSeconds: dt });
     }
     return laps;
   } catch {
@@ -133,27 +136,48 @@ async function mapWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T)
   return results;
 }
 
+interface RawActivity {
+  activityId: number;
+  activityName?: string;
+  startTimeLocal: string;
+  distance?: number;
+  duration?: number;
+  calories?: number;
+  activityType?: { typeKey?: string };
+}
+
+// Garmin caps a single search page, so walk pages until a short one comes back.
+async function fetchActivityList(token: string, startDate: string, endDate: string, activityType?: string): Promise<RawActivity[]> {
+  const PAGE = 100;
+  const all: RawActivity[] = [];
+  for (let start = 0; start < 2000; start += PAGE) {
+    const typeParam = activityType ? `&activityType=${activityType}` : "";
+    try {
+      const res = await fetch(
+        `${CONNECT_API}/activitylist-service/activities/search/activities?startDate=${startDate}&endDate=${endDate}${typeParam}&limit=${PAGE}&start=${start}`,
+        {
+          headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT },
+          next: { revalidate: 86400 },
+        },
+      );
+      if (!res.ok) break;
+      const page = await res.json();
+      if (!Array.isArray(page)) break;
+      all.push(...page);
+      if (page.length < PAGE) break;
+    } catch {
+      break;
+    }
+  }
+  return all;
+}
+
 /** startDate/endDate as "YYYY-MM-DD". */
 export async function fetchRunningActivities(startDate: string, endDate: string): Promise<RunActivity[]> {
   const token = await getAccessToken();
   if (!token) return [];
 
-  let raw: unknown;
-  try {
-    const res = await fetch(
-      `${CONNECT_API}/activitylist-service/activities/search/activities?startDate=${startDate}&endDate=${endDate}&activityType=running&limit=200&start=0`,
-      {
-        headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT },
-        next: { revalidate: 86400 },
-      },
-    );
-    if (!res.ok) return [];
-    raw = await res.json();
-  } catch {
-    return [];
-  }
-  if (!Array.isArray(raw)) return [];
-
+  const raw = await fetchActivityList(token, startDate, endDate, "running");
   const lapsByActivity = await mapWithConcurrency(raw, 8, (a) => fetchActivityLaps(a.activityId, token));
 
   return raw.map((a, i) => ({
@@ -165,5 +189,28 @@ export async function fetchRunningActivities(startDate: string, endDate: string)
     calories: a.calories ?? 0,
     isTreadmill: a.activityType?.typeKey === "treadmill_running",
     laps: lapsByActivity[i],
+  }));
+}
+
+export interface TrainingActivity {
+  id: number;
+  startTimeLocal: string;
+  typeKey: string;
+  distanceMeters: number;
+  durationSeconds: number;
+}
+
+/** Every activity type (runs, rides, hikes, gym...) — summary fields only, no per-second streams. */
+export async function fetchAllActivities(startDate: string, endDate: string): Promise<TrainingActivity[]> {
+  const token = await getAccessToken();
+  if (!token) return [];
+
+  const raw = await fetchActivityList(token, startDate, endDate);
+  return raw.map((a) => ({
+    id: a.activityId,
+    startTimeLocal: a.startTimeLocal,
+    typeKey: a.activityType?.typeKey ?? "other",
+    distanceMeters: a.distance ?? 0,
+    durationSeconds: a.duration ?? 0,
   }));
 }

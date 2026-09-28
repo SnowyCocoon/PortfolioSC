@@ -1,19 +1,19 @@
 import { Activity, ArrowRight, CheckCircle2, House, XCircle } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle, PanelContent } from "./panel";
-import { fetchRunningActivities } from "../lib/garmin";
+import { fetchAllActivities, fetchRunningActivities } from "../lib/garmin";
+import { buildMonthlyVolume } from "../lib/training-volume";
 import {
   DISTANCE_TARGETS,
   computeBests,
-  buildMonthlySummaries,
-  formatDuration,
+  formatTargetTime,
   withBaseline,
   type DistanceTarget,
 } from "../lib/running-stats";
 import { MonthTabs } from "./garmin-month-tabs";
 
-// Personal bests look back to the start of 2024. The monthly breakdown below
-// only shows June 2026 onward — a new training chapter — but the all-time
-// records at the top aren't scoped to that cutoff.
+// Personal bests look back to the start of 2024. The monthly training volume
+// below (all sports, not just running) only covers June 2026 onward — a new
+// training chapter — but the all-time records aren't scoped to that cutoff.
 const ALL_TIME_START = "2024-01-01";
 const CHAPTER_START = "2026-06-01";
 
@@ -22,17 +22,20 @@ function todayISODate(): string {
 }
 
 export async function GarminRunning() {
-  const activities = await fetchRunningActivities(ALL_TIME_START, todayISODate());
+  const [activities, training] = await Promise.all([
+    fetchRunningActivities(ALL_TIME_START, todayISODate()),
+    fetchAllActivities(CHAPTER_START, todayISODate()),
+  ]);
   const outdoorBests = withBaseline(computeBests(activities.filter((a) => !a.isTreadmill)));
   const treadmillBests = computeBests(activities.filter((a) => a.isTreadmill));
-  const months = buildMonthlySummaries(activities.filter((a) => a.startTimeLocal >= CHAPTER_START));
+  const months = buildMonthlyVolume(training);
 
   return (
     <Panel>
       <PanelHeader>
         <div className="flex items-center gap-2">
           <Activity className="size-4 text-[#b5392b]" />
-          <PanelTitle>Running</PanelTitle>
+          <PanelTitle>Running &amp; Training</PanelTitle>
         </div>
       </PanelHeader>
 
@@ -44,9 +47,9 @@ export async function GarminRunning() {
         ) : (
           <>
             <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              Personal Bests
+              All-Time Personal Bests
             </h3>
-            <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
               {DISTANCE_TARGETS.map((target) => (
                 <DistanceCard
                   key={target.key}
@@ -57,7 +60,14 @@ export async function GarminRunning() {
               ))}
             </div>
 
-            {months.length > 0 && <MonthTabs months={months} distances={DISTANCE_TARGETS} />}
+            {months.length > 0 && (
+              <>
+                <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                  Monthly Training Volume
+                </h3>
+                <MonthTabs months={months} />
+              </>
+            )}
           </>
         )}
       </PanelContent>
@@ -91,16 +101,16 @@ function DistanceCard({
           ))}
       </div>
       <div className="mt-1 font-mono text-lg font-bold tabular-nums">
-        {bestSeconds != null ? formatDuration(bestSeconds) : "—"}
+        {bestSeconds != null ? formatTargetTime(target, bestSeconds) : "—"}
       </div>
       {treadmillIsFaster && (
         <div className="mt-0.5 flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
-          <House className="size-2.5 shrink-0" />({formatDuration(treadmillSeconds!)} on treadmill)
+          <House className="size-2.5 shrink-0" />({formatTargetTime(target, treadmillSeconds!)} on treadmill)
         </div>
       )}
       {hasGoal && (
         <div className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
-          Goal <ArrowRight className="size-2.5" /> {formatDuration(target.goalSeconds!)}
+          Goal <ArrowRight className="size-2.5" /> {formatTargetTime(target, target.goalSeconds!)}
         </div>
       )}
     </div>
