@@ -127,12 +127,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* Prevent 200vw screen-line pseudo-elements from causing horizontal scroll.
+     Mobile browsers don't reliably honour overflow on the root element alone,
+     so clip on body too (clip, not hidden, keeps the sticky header working). */
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
   }
   html {
     @apply font-sans;
-    overflow-x: clip; /* prevent 200vw screen-line pseudo-elements from causing horizontal scroll */
+    overflow-x: clip;
   }
 }
 

@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { Activity, ArrowRight, CheckCircle2, House, XCircle } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle, PanelContent } from "./panel";
 import { fetchAllActivities, fetchRunningActivities } from "../lib/garmin";
@@ -21,14 +22,28 @@ function todayISODate(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+// Pulling every run's per-second stream from Garmin takes ~20s, so the whole
+// computation is cached once a day (like the OSRS hiscores). Only the small
+// derived result is stored — the raw streams are too big for the data cache.
+const getGarminStats = unstable_cache(
+  async () => {
+    const [activities, training] = await Promise.all([
+      fetchRunningActivities(ALL_TIME_START, todayISODate()),
+      fetchAllActivities(CHAPTER_START, todayISODate()),
+    ]);
+    return {
+      hasData: activities.length > 0,
+      outdoorBests: withBaseline(computeBests(activities.filter((a) => !a.isTreadmill))),
+      treadmillBests: computeBests(activities.filter((a) => a.isTreadmill)),
+      months: buildMonthlyVolume(training),
+    };
+  },
+  ["garmin-hobby-stats-v1"],
+  { revalidate: 86400 },
+);
+
 export async function GarminRunning() {
-  const [activities, training] = await Promise.all([
-    fetchRunningActivities(ALL_TIME_START, todayISODate()),
-    fetchAllActivities(CHAPTER_START, todayISODate()),
-  ]);
-  const outdoorBests = withBaseline(computeBests(activities.filter((a) => !a.isTreadmill)));
-  const treadmillBests = computeBests(activities.filter((a) => a.isTreadmill));
-  const months = buildMonthlyVolume(training);
+  const { hasData, outdoorBests, treadmillBests, months } = await getGarminStats();
 
   return (
     <Panel>
@@ -40,7 +55,7 @@ export async function GarminRunning() {
       </PanelHeader>
 
       <PanelContent>
-        {activities.length === 0 ? (
+        {!hasData ? (
           <p className="font-mono text-xs text-muted-foreground">
             Garmin data unavailable — stats will refresh once the connection is restored.
           </p>
