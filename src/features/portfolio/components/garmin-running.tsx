@@ -1,7 +1,9 @@
-import { unstable_cache } from "next/cache";
 import { Activity, ArrowRight, CheckCircle2, House, XCircle } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle, PanelContent } from "./panel";
-import { fetchAllActivities, fetchRunningActivities } from "../lib/garmin";
+import { DataCheckpointNotice } from "./data-checkpoint-notice";
+import { lastGood } from "../lib/last-good";
+import { fetchAllActivities, fetchRunningActivities, getGarminAccessToken } from "../lib/garmin";
+import { GARMIN_SNAPSHOT, type GarminStats } from "../data/garmin-snapshot";
 import { buildMonthlyVolume } from "../lib/training-volume";
 import {
   DISTANCE_TARGETS,
@@ -25,25 +27,28 @@ function todayISODate(): string {
 // Pulling every run's per-second stream from Garmin takes ~20s, so the whole
 // computation is cached once a day (like the OSRS hiscores). Only the small
 // derived result is stored — the raw streams are too big for the data cache.
-const getGarminStats = unstable_cache(
+// If Garmin can't be reached, the last good pull keeps being shown.
+const getGarminStats = lastGood<GarminStats>(
+  "garmin-hobby-stats-v3",
   async () => {
+    const token = await getGarminAccessToken();
     const [activities, training] = await Promise.all([
-      fetchRunningActivities(ALL_TIME_START, todayISODate()),
-      fetchAllActivities(CHAPTER_START, todayISODate()),
+      fetchRunningActivities(token, ALL_TIME_START, todayISODate()),
+      fetchAllActivities(token, CHAPTER_START, todayISODate()),
     ]);
+    if (activities.length === 0) throw new Error("Garmin returned no running activities");
     return {
-      hasData: activities.length > 0,
       outdoorBests: withBaseline(computeBests(activities.filter((a) => !a.isTreadmill))),
       treadmillBests: computeBests(activities.filter((a) => a.isTreadmill)),
       months: buildMonthlyVolume(training),
     };
   },
-  ["garmin-hobby-stats-v1"],
-  { revalidate: 86400 },
+  GARMIN_SNAPSHOT,
 );
 
 export async function GarminRunning() {
-  const { hasData, outdoorBests, treadmillBests, months } = await getGarminStats();
+  const { data, fetchedAt, unavailable } = await getGarminStats();
+  const { outdoorBests, treadmillBests, months } = data;
 
   return (
     <Panel>
@@ -55,36 +60,30 @@ export async function GarminRunning() {
       </PanelHeader>
 
       <PanelContent>
-        {!hasData ? (
-          <p className="font-mono text-xs text-muted-foreground">
-            Garmin data unavailable — stats will refresh once the connection is restored.
-          </p>
-        ) : (
+        <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
+          All-Time Personal Bests
+        </h3>
+        <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+          {DISTANCE_TARGETS.map((target) => (
+            <DistanceCard
+              key={target.key}
+              target={target}
+              bestSeconds={outdoorBests[target.key]}
+              treadmillSeconds={treadmillBests[target.key]}
+            />
+          ))}
+        </div>
+
+        {months.length > 0 && (
           <>
             <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              All-Time Personal Bests
+              Monthly Training Volume
             </h3>
-            <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-              {DISTANCE_TARGETS.map((target) => (
-                <DistanceCard
-                  key={target.key}
-                  target={target}
-                  bestSeconds={outdoorBests[target.key]}
-                  treadmillSeconds={treadmillBests[target.key]}
-                />
-              ))}
-            </div>
-
-            {months.length > 0 && (
-              <>
-                <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                  Monthly Training Volume
-                </h3>
-                <MonthTabs months={months} />
-              </>
-            )}
+            <MonthTabs months={months} />
           </>
         )}
+
+        <DataCheckpointNotice source="Garmin" fetchedAt={fetchedAt} unavailable={unavailable} className="mt-3" />
       </PanelContent>
     </Panel>
   );

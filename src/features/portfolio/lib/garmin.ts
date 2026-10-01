@@ -21,28 +21,32 @@ export interface RunActivity {
   laps: RunLap[];
 }
 
-// Garmin's DI auth issues a new refresh token on every use, but the old one
-// stays valid — so we can keep reusing the same one from env indefinitely
-// instead of persisting rotated tokens across serverless invocations.
-async function getAccessToken(): Promise<string | null> {
-  if (!REFRESH_TOKEN || !CLIENT_ID) return null;
-  try {
-    const res = await fetch("https://diauth.garmin.com/di-oauth2-service/oauth/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": USER_AGENT },
-      body: new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token: REFRESH_TOKEN,
-        client_id: CLIENT_ID,
-      }),
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return (data.access_token as string) ?? null;
-  } catch {
-    return null;
+// Garmin's DI auth issues a new refresh token on every use, and the one in
+// env stops being accepted a few days later (invalid_grant). Nothing here
+// persists the rotated token, so the env one has to be regenerated with
+// scripts/garmin-token.py when that happens — callers fall back to the last
+// good data in the meantime. Throws rather than returning null so the reason
+// ends up in the server logs.
+export async function getGarminAccessToken(): Promise<string> {
+  if (!REFRESH_TOKEN || !CLIENT_ID) throw new Error("Garmin credentials are not configured");
+  const res = await fetch("https://diauth.garmin.com/di-oauth2-service/oauth/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": USER_AGENT },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: REFRESH_TOKEN,
+      client_id: CLIENT_ID,
+    }),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    // Only the error code is reported — Garmin's error_description echoes the token back.
+    const body = await res.json().catch(() => null);
+    throw new Error(`Garmin token refresh failed: ${res.status} ${body?.error ?? res.statusText}`);
   }
+  const data = await res.json();
+  if (typeof data.access_token !== "string") throw new Error("Garmin token refresh returned no access token");
+  return data.access_token;
 }
 
 const MAX_PLAUSIBLE_SPEED = 10; // m/s
@@ -147,36 +151,31 @@ interface RawActivity {
 }
 
 // Garmin caps a single search page, so walk pages until a short one comes back.
+// A failed page throws instead of returning a partial list — stats computed
+// from half the activities would get cached as if they were good.
 async function fetchActivityList(token: string, startDate: string, endDate: string, activityType?: string): Promise<RawActivity[]> {
   const PAGE = 100;
   const all: RawActivity[] = [];
   for (let start = 0; start < 2000; start += PAGE) {
     const typeParam = activityType ? `&activityType=${activityType}` : "";
-    try {
-      const res = await fetch(
-        `${CONNECT_API}/activitylist-service/activities/search/activities?startDate=${startDate}&endDate=${endDate}${typeParam}&limit=${PAGE}&start=${start}`,
-        {
-          headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT },
-          next: { revalidate: 86400 },
-        },
-      );
-      if (!res.ok) break;
-      const page = await res.json();
-      if (!Array.isArray(page)) break;
-      all.push(...page);
-      if (page.length < PAGE) break;
-    } catch {
-      break;
-    }
+    const res = await fetch(
+      `${CONNECT_API}/activitylist-service/activities/search/activities?startDate=${startDate}&endDate=${endDate}${typeParam}&limit=${PAGE}&start=${start}`,
+      {
+        headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT },
+        next: { revalidate: 86400 },
+      },
+    );
+    if (!res.ok) throw new Error(`Garmin activity list failed: ${res.status} ${res.statusText}`);
+    const page = await res.json();
+    if (!Array.isArray(page)) throw new Error("Garmin activity list returned an unexpected payload");
+    all.push(...page);
+    if (page.length < PAGE) break;
   }
   return all;
 }
 
 /** startDate/endDate as "YYYY-MM-DD". */
-export async function fetchRunningActivities(startDate: string, endDate: string): Promise<RunActivity[]> {
-  const token = await getAccessToken();
-  if (!token) return [];
-
+export async function fetchRunningActivities(token: string, startDate: string, endDate: string): Promise<RunActivity[]> {
   const raw = await fetchActivityList(token, startDate, endDate, "running");
   const lapsByActivity = await mapWithConcurrency(raw, 8, (a) => fetchActivityLaps(a.activityId, token));
 
@@ -201,10 +200,7 @@ export interface TrainingActivity {
 }
 
 /** Every activity type (runs, rides, hikes, gym...) — summary fields only, no per-second streams. */
-export async function fetchAllActivities(startDate: string, endDate: string): Promise<TrainingActivity[]> {
-  const token = await getAccessToken();
-  if (!token) return [];
-
+export async function fetchAllActivities(token: string, startDate: string, endDate: string): Promise<TrainingActivity[]> {
   const raw = await fetchActivityList(token, startDate, endDate);
   return raw.map((a) => ({
     id: a.activityId,

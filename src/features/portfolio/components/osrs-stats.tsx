@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { Lock } from "lucide-react";
 import { Panel, PanelHeader, PanelTitle, PanelContent } from "./panel";
+import { DataCheckpointNotice } from "./data-checkpoint-notice";
+import { lastGood } from "../lib/last-good";
+import { OSRS_SNAPSHOT, type SkillRow } from "../data/osrs-snapshot";
 
 const PLAYER = "4i40";
 
@@ -52,28 +55,32 @@ const RECENT_ITEMS = [
 // verified empirically against the live API).
 const COLLECTION_LOG_INDEX = 44;
 
-type SkillRow = { rank: number; level: number; xp: number };
-
-async function fetchStats(): Promise<SkillRow[] | null> {
-  try {
+// Cached once a day; if the hiscores API can't be reached, the last good pull keeps being shown.
+const getStats = lastGood<SkillRow[]>(
+  "osrs-hiscores-v1",
+  async () => {
     const res = await fetch(
       `https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player=${PLAYER}`,
-      { next: { revalidate: 86400 } },
+      { cache: "no-store" },
     );
-    if (!res.ok) return null;
+    if (!res.ok) throw new Error(`OSRS hiscores failed: ${res.status} ${res.statusText}`);
     const text = await res.text();
-    return text
+    const rows = text
       .trim()
       .split("\n")
       .slice(0, COLLECTION_LOG_INDEX + 1)
       .map((line) => {
-        const [rank, level, xp] = line.split(",").map(Number);
+        // Activity lines only carry rank and score, no xp.
+        const [rank, level, xp = 0] = line.split(",").map(Number);
         return { rank, level, xp };
       });
-  } catch {
-    return null;
-  }
-}
+    if (rows.length <= COLLECTION_LOG_INDEX || rows.some((r) => Number.isNaN(r.rank) || Number.isNaN(r.level))) {
+      throw new Error("OSRS hiscores returned an unexpected payload");
+    }
+    return rows;
+  },
+  OSRS_SNAPSHOT,
+);
 
 function calcCombat(s: SkillRow[]) {
   // s[0]=Overall, s[1]=Attack, s[2]=Defence, s[3]=Strength, s[4]=HP,
@@ -86,7 +93,7 @@ function calcCombat(s: SkillRow[]) {
 }
 
 export async function OsrsStats() {
-  const skills = await fetchStats();
+  const { data: skills, fetchedAt, unavailable } = await getStats();
 
   return (
     <Panel>
@@ -113,58 +120,50 @@ export async function OsrsStats() {
           on end-game PvM content and skilling milestones.
         </p>
 
-        {skills ? (
-          <>
-            {/* Summary stats */}
-            <div className="mb-5 flex flex-wrap gap-3">
-              <StatBox label="Total Level" value={skills[0].level.toLocaleString()} accent />
-              <StatBox label="Combat" value={String(calcCombat(skills))} accent />
-              <StatBox label="Ironman Rank" value={`#${skills[0].rank.toLocaleString()}`} />
-              <StatBox label="Collection Log" value={String(skills[COLLECTION_LOG_INDEX].level)} />
-            </div>
+        {/* Summary stats */}
+        <div className="mb-5 flex flex-wrap gap-3">
+          <StatBox label="Total Level" value={skills[0].level.toLocaleString()} accent />
+          <StatBox label="Combat" value={String(calcCombat(skills))} accent />
+          <StatBox label="Ironman Rank" value={`#${skills[0].rank.toLocaleString()}`} />
+          <StatBox label="Collection Log" value={String(skills[COLLECTION_LOG_INDEX].level)} />
+        </div>
 
-            {/* Skill grid — all 23 skills, same order as the API */}
-            <div className="grid grid-cols-4 gap-1 sm:grid-cols-6 lg:grid-cols-8">
-              {API_SKILLS.map((skill, i) => {
-                const row = skills[i + 1];
-                const isDefence = skill.name === "Defence";
-                const isMaxed = row.level >= 99;
-                return (
-                  <div
-                    key={skill.name}
-                    title={isMaxed ? `${skill.name} (99 — maxed)` : skill.name}
-                    className={`relative flex items-center gap-1.5 rounded border px-2 py-1.5 ${
-                      isDefence
-                        ? "border-line/40 bg-muted/20"
-                        : isMaxed
-                        ? "border-amber-400/60 bg-amber-400/10 dark:border-amber-400/40 dark:bg-amber-400/10"
-                        : "border-line"
-                    }`}
-                  >
-                    <Image
-                      src={`https://oldschool.runescape.wiki/images/${skill.icon}.png`}
-                      alt={skill.name}
-                      width={16}
-                      height={16}
-                      unoptimized
-                      className={`shrink-0 ${isDefence ? "opacity-40" : ""}`}
-                    />
-                    <span className={`font-mono text-xs font-bold tabular-nums ${isDefence ? "text-muted-foreground/50" : isMaxed ? "text-amber-500 dark:text-amber-400" : ""}`}>
-                      {row.level}
-                    </span>
-                    {isDefence && (
-                      <Lock className="absolute right-1 top-1 size-2.5 text-muted-foreground/50" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <p className="font-mono text-xs text-muted-foreground">
-            Hiscores unavailable — stats will refresh when the API is reachable.
-          </p>
-        )}
+        {/* Skill grid — all 23 skills, same order as the API */}
+        <div className="grid grid-cols-4 gap-1 sm:grid-cols-6 lg:grid-cols-8">
+          {API_SKILLS.map((skill, i) => {
+            const row = skills[i + 1];
+            const isDefence = skill.name === "Defence";
+            const isMaxed = row.level >= 99;
+            return (
+              <div
+                key={skill.name}
+                title={isMaxed ? `${skill.name} (99 — maxed)` : skill.name}
+                className={`relative flex items-center gap-1.5 rounded border px-2 py-1.5 ${
+                  isDefence
+                    ? "border-line/40 bg-muted/20"
+                    : isMaxed
+                    ? "border-amber-400/60 bg-amber-400/10 dark:border-amber-400/40 dark:bg-amber-400/10"
+                    : "border-line"
+                }`}
+              >
+                <Image
+                  src={`https://oldschool.runescape.wiki/images/${skill.icon}.png`}
+                  alt={skill.name}
+                  width={16}
+                  height={16}
+                  unoptimized
+                  className={`shrink-0 ${isDefence ? "opacity-40" : ""}`}
+                />
+                <span className={`font-mono text-xs font-bold tabular-nums ${isDefence ? "text-muted-foreground/50" : isMaxed ? "text-amber-500 dark:text-amber-400" : ""}`}>
+                  {row.level}
+                </span>
+                {isDefence && (
+                  <Lock className="absolute right-1 top-1 size-2.5 text-muted-foreground/50" />
+                )}
+              </div>
+            );
+          })}
+        </div>
       </PanelContent>
 
       {/* Recent drops */}
@@ -198,6 +197,13 @@ export async function OsrsStats() {
           ))}
         </div>
       </div>
+
+      <DataCheckpointNotice
+        source="OSRS"
+        fetchedAt={fetchedAt}
+        unavailable={unavailable}
+        className="border-t border-line px-4 py-2"
+      />
     </Panel>
   );
 }
